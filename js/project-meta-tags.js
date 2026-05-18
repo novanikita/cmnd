@@ -16,6 +16,73 @@
     { re: /Болив/i, value: 'Боливия' }
   ];
 
+  var COUNTRY_EN = {
+    'Казахстан': 'Kazakhstan',
+    'Узбекистан': 'Uzbekistan',
+    'Таджикистан': 'Tajikistan',
+    'Кыргызстан': 'Kyrgyzstan',
+    'Беларусь': 'Belarus',
+    'Грузия': 'Georgia',
+    'Армения': 'Armenia',
+    'Боливия': 'Bolivia',
+    'Непал': 'Nepal',
+    "Кот-д'Ивуар": "Côte d'Ivoire",
+    'Замбия': 'Zambia'
+  };
+
+  var TAG_EN = {
+    'Генерация': 'AI generation',
+    'Концепция': 'Concept',
+    'Кей-вижуал': 'Key visual',
+    'Озвучка': 'Voiceover',
+    'Ивент': 'Event',
+    'Иллюстрация': 'Illustration',
+    'Презентация': 'Presentation',
+    'Наружка': 'OOH',
+    'InApp': 'In-app'
+  };
+
+  function getI18nPack(number) {
+    return window.YandexProjectI18n && window.YandexProjectI18n[number]
+      ? window.YandexProjectI18n[number]
+      : null;
+  }
+
+  function translateCountry(ru) {
+    if (!ru) return ru;
+    return ru
+      .split(',')
+      .map(function (part) {
+        var trimmed = part.trim();
+        return COUNTRY_EN[trimmed] || trimmed;
+      })
+      .join(', ');
+  }
+
+  function translateTag(ru) {
+    return TAG_EN[ru] || ru;
+  }
+
+  function setI18n(el, ru, en) {
+    el.setAttribute('data-i18n', '');
+    el.setAttribute('data-ru', ru);
+    el.setAttribute('data-en', en || ru);
+    el.textContent = ru;
+  }
+
+  function resolveTitleEn(number, titleRu) {
+    var pack = getI18nPack(number);
+    if (pack && pack.titleEn) return pack.titleEn;
+    if (/NDA/i.test(titleRu)) return 'NDA';
+    return titleRu;
+  }
+
+  function resolveDescriptionEn(number, descriptionRu) {
+    var pack = getI18nPack(number);
+    if (pack && pack.descriptionEn) return pack.descriptionEn;
+    return descriptionRu || '';
+  }
+
   // CSV-backed data for remaining Yandex projects.
   // Used to convert old split-format blocks (date + <code>№..</code> text) into new structure.
   var PROJECT_DATA_BY_NUMBER = {
@@ -142,9 +209,13 @@
     var p = document.createElement('p');
     p.className = 'project-meta';
 
-    tokens.forEach(function (t) {
+    tokens.forEach(function (t, index) {
       var span = document.createElement('span');
-      span.textContent = t;
+      if (index === 2) {
+        setI18n(span, t, translateCountry(t));
+      } else {
+        span.textContent = t;
+      }
       p.appendChild(span);
     });
 
@@ -159,7 +230,7 @@
     tokens.forEach(function (t) {
       var chip = document.createElement('span');
       chip.className = 'project-tag-chip';
-      chip.textContent = t;
+      setI18n(chip, t, translateTag(t));
       row.appendChild(chip);
     });
 
@@ -185,29 +256,36 @@
     return (title || '').replace(/\*+\s*NDA\s*\*+/gi, 'NDA').trim();
   }
 
-  function buildTitleAndDescriptionBlock(title, description) {
+  function buildTitleAndDescriptionBlock(title, description, number) {
     var fragment = document.createDocumentFragment();
+    var titleRu = normalizeNdaTitle(title);
+    var titleEn = normalizeNdaTitle(resolveTitleEn(number, title));
     var h3 = document.createElement('h3');
-    h3.textContent = normalizeNdaTitle(title);
+    setI18n(h3, titleRu, titleEn);
     fragment.appendChild(h3);
 
     if (description) {
       var p = document.createElement('p');
-      p.textContent = description;
+      setI18n(p, description, resolveDescriptionEn(number, description));
       fragment.appendChild(p);
     }
 
     return fragment;
   }
 
-  function buildTitleWithDescriptionParagraph(title, description) {
+  function buildTitleWithDescriptionParagraph(title, description, number) {
     var p = document.createElement('p');
+    var titleRu = normalizeNdaTitle(title);
+    var titleEn = normalizeNdaTitle(resolveTitleEn(number, title));
     var span = document.createElement('span');
     span.className = 'project-text-emphasis';
-    span.textContent = normalizeNdaTitle(title);
+    setI18n(span, titleRu, titleEn);
     p.appendChild(span);
     if (description) {
-      p.appendChild(document.createTextNode(' ' + description));
+      p.appendChild(document.createTextNode(' '));
+      var desc = document.createElement('span');
+      setI18n(desc, description, resolveDescriptionEn(number, description));
+      p.appendChild(desc);
     }
     return p;
   }
@@ -372,8 +450,8 @@
     var hasContent = detectProjectContentInRawBlock(dateEl);
     var useHeadingLayout = hasContent;
     var titleBlock = useHeadingLayout
-      ? buildTitleAndDescriptionBlock(title, description)
-      : buildTitleWithDescriptionParagraph(title, description);
+      ? buildTitleAndDescriptionBlock(title, description, numberOnly)
+      : buildTitleWithDescriptionParagraph(title, description, numberOnly);
 
     parent.insertBefore(metaEl, dateEl);
     if (tags.length) parent.insertBefore(buildTagRow(tags), dateEl);
@@ -395,6 +473,10 @@
     });
 
     normalizeProjectSpacingAndType();
+
+    if (window.SiteLang && typeof window.SiteLang.apply === 'function') {
+      window.SiteLang.apply(window.SiteLang.getCurrent());
+    }
   }
 
   if (document.readyState === 'loading') {
