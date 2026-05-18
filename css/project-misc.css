@@ -6,12 +6,15 @@ ids-gallery,
   display: none;
 }
 
-.ids__wrapper[data-client-tag="yandex"] .project-gallery {
+.ids__wrapper[data-client-tag="yandex"] .project-gallery,
+.ids__wrapper[data-client-tag="audit"] .project-gallery {
   display: block;
 }
 
 .ids__wrapper[data-client-tag="yandex"] ids-gallery,
-.ids__wrapper[data-client-tag="yandex"] .ids__gallery {
+.ids__wrapper[data-client-tag="yandex"] .ids__gallery,
+.ids__wrapper[data-client-tag="audit"] ids-gallery,
+.ids__wrapper[data-client-tag="audit"] .ids__gallery {
   display: flex;
 }
 
