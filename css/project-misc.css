@@ -18,17 +18,22 @@ ids-gallery,
   display: flex;
 }
 
-.project-gallery--rangos {
+.project-gallery--rangos,
+.project-gallery--lavatop {
   display: block;
 }
 
 .project-gallery--rangos ids-gallery,
-.project-gallery--rangos .ids__gallery {
+.project-gallery--rangos .ids__gallery,
+.project-gallery--lavatop ids-gallery,
+.project-gallery--lavatop .ids__gallery {
   display: flex;
 }
 
 .project-gallery--rangos figure img,
-.project-gallery--rangos figure video {
+.project-gallery--rangos figure video,
+.project-gallery--lavatop figure img,
+.project-gallery--lavatop figure video {
   width: 100%;
   display: block;
 }
