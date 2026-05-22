@@ -191,7 +191,16 @@ header.is-hidden {
   }
 
   .main-header__left .logo a {
-    font-size: 3.5em;
+    font-size: 3.5em !important;
+  }
+
+  header.is-fixed-on-case {
+    position: sticky;
+    top: 0;
+  }
+
+  .main-header__right {
+    margin-top: 0 !important;
   }
 
   .main-header__right {

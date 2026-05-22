@@ -13,7 +13,7 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: 'soon.html',
+        href: 'lavatop.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
@@ -22,7 +22,7 @@
         titleEn: 'Lavatop'
       },
       {
-        href: 'soon.html',
+        href: 'rangos.html',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',

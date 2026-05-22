@@ -3,11 +3,16 @@
 
   var LOGO_MIN_EM = 2;
   var LOGO_SHRINK_DISTANCE = 260;
+  var MOBILE_MAX_WIDTH = 768;
 
   function isCasePage() {
     return Boolean(
       document.querySelector('.project-case-text, .project-gallery, .project-meta, ids-gallery, .ids__gallery')
     );
+  }
+
+  function isMobileViewport() {
+    return window.matchMedia('(max-width: ' + MOBILE_MAX_WIDTH + 'px)').matches;
   }
 
   function clamp01(value) {
@@ -16,8 +21,20 @@
     return value;
   }
 
+  function resetHeaderInlineStyles(header) {
+    if (!header) return;
+    var logoLink = header.querySelector('.main-header__left .logo a');
+    var rightBlock = header.querySelector('.main-header__right');
+    if (logoLink) logoLink.style.fontSize = '';
+    if (rightBlock) rightBlock.style.marginTop = '';
+  }
+
   function syncHeaderLogoScale(header) {
     if (!header || !isCasePage()) return;
+    if (isMobileViewport()) {
+      resetHeaderInlineStyles(header);
+      return;
+    }
     var logoLink = header.querySelector('.main-header__left .logo a');
     var rightBlock = header.querySelector('.main-header__right');
     if (!logoLink) return;

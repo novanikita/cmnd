@@ -303,7 +303,7 @@
 
   function detectProjectContent(startNode) {
     var cur = startNode ? startNode.nextElementSibling : null;
-    while (cur && !(cur.classList && cur.classList.contains('project-meta'))) {
+    while (cur && !(cur.classList && cur.classList.contains('project-meta-wrap'))) {
       if (
         (cur.classList && cur.classList.contains('project-gallery')) ||
         cur.querySelector('img, video, iframe')
@@ -331,37 +331,40 @@
   }
 
   function normalizeProjectSpacingAndType() {
-    var metas = Array.prototype.slice.call(document.querySelectorAll('p.project-meta'));
-    if (!metas.length) return;
+    var wraps = Array.prototype.slice.call(document.querySelectorAll('.project-meta-wrap'));
+    if (!wraps.length) return;
 
-    metas.forEach(function (metaEl, idx) {
-      var hasContent = detectProjectContent(metaEl);
-      metaEl.classList.add(hasContent ? 'project-meta--content' : 'project-meta--compact');
+    wraps.forEach(function (wrapEl, idx) {
+      var hasContent = detectProjectContent(wrapEl);
+      var metaEl = wrapEl.querySelector('p.project-meta');
+      if (metaEl) {
+        metaEl.classList.add(hasContent ? 'project-meta--content' : 'project-meta--compact');
+      }
       if (!hasContent) return;
 
       // Insert one base spacer before content projects (except the very first).
       if (idx > 0) {
         var beforeSpacer = document.createElement('div');
         beforeSpacer.className = 'ids__space';
-        metaEl.parentNode.insertBefore(beforeSpacer, metaEl);
+        wrapEl.parentNode.insertBefore(beforeSpacer, wrapEl);
       }
 
       // Insert one base spacer after content projects.
-      var scan = metaEl.nextElementSibling;
-      var nextMeta = null;
+      var scan = wrapEl.nextElementSibling;
+      var nextWrap = null;
       while (scan) {
-        if (scan.matches && scan.matches('p.project-meta')) {
-          nextMeta = scan;
+        if (scan.classList && scan.classList.contains('project-meta-wrap')) {
+          nextWrap = scan;
           break;
         }
         scan = scan.nextElementSibling;
       }
       var afterSpacer = document.createElement('div');
       afterSpacer.className = 'ids__space';
-      if (nextMeta) {
-        metaEl.parentNode.insertBefore(afterSpacer, nextMeta);
+      if (nextWrap) {
+        wrapEl.parentNode.insertBefore(afterSpacer, nextWrap);
       } else {
-        metaEl.parentNode.appendChild(afterSpacer);
+        wrapEl.parentNode.appendChild(afterSpacer);
       }
     });
   }
@@ -393,12 +396,13 @@
 
     var metaEl = buildMetaParagraph(metaTokens);
 
-    parent.insertBefore(metaEl, dateEl);
-    // Render chip row only when extra tags exist (4th token and beyond).
+    var wrap = document.createElement('div');
+    wrap.className = 'project-meta-wrap';
+    wrap.appendChild(metaEl);
     if (tagTokens.length) {
-      var tagRowEl = buildTagRow(tagTokens);
-      parent.insertBefore(tagRowEl, dateEl);
+      wrap.appendChild(buildTagRow(tagTokens));
     }
+    parent.insertBefore(wrap, dateEl);
     dateEl.remove();
     return true;
   }
@@ -415,7 +419,7 @@
 
     // Avoid re-processing already converted blocks.
     var prev = dateEl.previousElementSibling;
-    if (prev && prev.classList && prev.classList.contains('project-meta')) return false;
+    if (prev && prev.classList && prev.classList.contains('project-meta-wrap')) return false;
 
     var nextP = dateEl.nextElementSibling;
     if (!nextP || nextP.tagName !== 'P') return false;
@@ -453,8 +457,11 @@
       ? buildTitleAndDescriptionBlock(title, description, numberOnly)
       : buildTitleWithDescriptionParagraph(title, description, numberOnly);
 
-    parent.insertBefore(metaEl, dateEl);
-    if (tags.length) parent.insertBefore(buildTagRow(tags), dateEl);
+    var wrap = document.createElement('div');
+    wrap.className = 'project-meta-wrap';
+    wrap.appendChild(metaEl);
+    if (tags.length) wrap.appendChild(buildTagRow(tags));
+    parent.insertBefore(wrap, dateEl);
     parent.insertBefore(titleBlock, dateEl);
     nextP.remove();
     dateEl.remove();
