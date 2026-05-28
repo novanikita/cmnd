@@ -77,6 +77,26 @@ ids-gallery,
   margin-left: -0.4em;
 }
 
+.ids p.project-team {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.project-team .portreit {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 0.1em;
+  vertical-align: -0.3em;
+}
+
+.project-team__member {
+  white-space: nowrap;
+}
+
+.project-team__role {
+  color: var(--color-blue-50);
+}
+
 hr.default {
   display: block;
   margin: 0.5em auto;

@@ -5,7 +5,7 @@
     index: [
       {
         itemClass: 'L',
-        href: 'yandex.html',
+        href: 'soon.html',
         coverImages:
           'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         promoClass: 'project-promo-soft',
@@ -13,7 +13,7 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: 'lavatop.html',
+        href: 'soon.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
@@ -22,7 +22,7 @@
         titleEn: 'Lavatop'
       },
       {
-        href: 'rangos.html',
+        href: 'soon.html',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
