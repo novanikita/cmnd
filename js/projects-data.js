@@ -75,7 +75,7 @@
         href: 'sber500.html',
         typeTags: 'events',
         coverImages:
-          'images/projects-cover/sber-cover-1.jpg|images/projects-cover/sber-cover-2.jpg|images/projects-cover/sber-cover-3.jpg',
+          'images/projects-cover/sber500-cover-1.avif|images/projects-cover/sber500-cover-2.avif|images/projects-cover/sber500-cover-3.avif|images/projects-cover/sber500-cover-4.avif',
         titleRu: 'Сбер Демодень',
         titleEn: 'Sber Demoday'
       },
@@ -90,7 +90,8 @@
       {
         itemClass: 'XL',
         href: 'yandex.html',
-        coverImages: 'images/projects-cover/yandex-full-cover.png',
+        coverImages:
+          'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         titleRu: 'Яндекс',
         titleEn: 'Yandex'
       },
@@ -121,7 +122,8 @@
         itemClass: 'XL',
         href: 'dodo.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/dodo-cover.jpg',
+        coverImages:
+          'images/projects-cover/dodo-cover-1.avif|images/projects-cover/dodo-cover-2.avif|images/projects-cover/dodo-cover-3.avif|images/projects-cover/dodo-cover-4.avif|images/projects-cover/dodo-cover-5.avif',
         titleRu: 'Додо Пицца',
         titleEn: 'Dodo Pizza'
       },
