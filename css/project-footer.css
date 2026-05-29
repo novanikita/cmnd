@@ -23,6 +23,25 @@ footer {
   font-weight: 700;
 }
 
+.about-page {
+  width: 100%;
+  padding: 0 1em;
+  box-sizing: border-box;
+}
+
+.ids .about-page h1.about-headline {
+  margin: 0;
+  font-size: calc((100vw - 2em) / 13.5);
+  line-height: 0.9;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .about-page {
+    padding: 0 0.5em;
+  }
+}
+
 .footer-brand {
   display: inline-flex;
   align-items: center;

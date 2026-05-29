@@ -8,7 +8,8 @@ ids-gallery,
 
 .ids__wrapper[data-client-tag="yandex"] .project-gallery,
 .ids__wrapper[data-client-tag="audit"] .project-gallery,
-.ids__wrapper[data-client-tag="sber500"] .project-gallery {
+.ids__wrapper[data-client-tag="sber500"] .project-gallery,
+.ids__wrapper[data-client-tag="sporos"] .project-gallery {
   display: block;
 }
 
@@ -17,7 +18,9 @@ ids-gallery,
 .ids__wrapper[data-client-tag="audit"] ids-gallery,
 .ids__wrapper[data-client-tag="audit"] .ids__gallery,
 .ids__wrapper[data-client-tag="sber500"] ids-gallery,
-.ids__wrapper[data-client-tag="sber500"] .ids__gallery {
+.ids__wrapper[data-client-tag="sber500"] .ids__gallery,
+.ids__wrapper[data-client-tag="sporos"] ids-gallery,
+.ids__wrapper[data-client-tag="sporos"] .ids__gallery {
   display: flex;
 }
 
