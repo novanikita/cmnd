@@ -63,16 +63,16 @@
     ],
     portfolio: [
       {
-        href: 'soon.html',
+        href: 'lavatop.html',
         typeTags: 'website',
         coverImages:
-          'images/projects-cover/lavatop-cover-1.jpg|images/projects-cover/lavatop-cover-2.jpg|images/projects-cover/lavatop-cover-3.jpg',
+          'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
         titleRu: 'Lavatop',
         titleEn: 'Lavatop'
       },
       {
         itemClass: 'L',
-        href: 'soon.html',
+        href: 'sber500.html',
         typeTags: 'events',
         coverImages:
           'images/projects-cover/sber-cover-1.jpg|images/projects-cover/sber-cover-2.jpg|images/projects-cover/sber-cover-3.jpg',
@@ -80,16 +80,16 @@
         titleEn: 'Sber Demoday'
       },
       {
-        href: 'soon.html',
+        href: 'rangos.html',
         typeTags: 'branding',
         coverImages:
-          'images/projects-cover/rangos-cover-1.jpg|images/projects-cover/rangos-cover-2.jpg|images/projects-cover/rangos-cover-3.jpg',
+          'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
         titleRu: 'Rangos',
         titleEn: 'Rangos'
       },
       {
         itemClass: 'XL',
-        href: 'soon.html',
+        href: 'yandex.html',
         coverImages: 'images/projects-cover/yandex-full-cover.png',
         titleRu: 'Яндекс',
         titleEn: 'Yandex'
@@ -110,16 +110,16 @@
         titleEn: 'PMK Park'
       },
       {
-        href: 'soon.html',
+        href: 'sporos.html',
         typeTags: 'website',
         coverImages:
-          'images/projects-cover/sporos-cover-1.jpg|images/projects-cover/sporos-cover-2.jpg|images/projects-cover/sporos-cover-3.jpg|images/projects-cover/sporos-cover-4.jpg|images/projects-cover/sporos-cover-5.jpg',
+          'images/projects-cover/sporos-cover-1.avif|images/projects-cover/sporos-cover-2.avif|images/projects-cover/sporos-cover-3.avif',
         titleRu: 'Sporos',
         titleEn: 'Sporos'
       },
       {
         itemClass: 'XL',
-        href: 'soon.html',
+        href: 'dodo.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/dodo-cover.jpg',
         titleRu: 'Додо Пицца',

@@ -40,6 +40,11 @@
       "file": "audit.html",
       "titleRu": "Аудит",
       "titleEn": "Audit"
+    },
+    {
+      "file": "portfolio.html",
+      "titleRu": "Все проекты",
+      "titleEn": "All projects"
     }
   ]
 }
