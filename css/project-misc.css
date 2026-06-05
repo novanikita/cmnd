@@ -25,23 +25,56 @@ ids-gallery,
 }
 
 .project-gallery--rangos,
-.project-gallery--lavatop {
+.project-gallery--lavatop,
+.project-gallery--dodo {
   display: block;
 }
 
 .project-gallery--rangos ids-gallery,
 .project-gallery--rangos .ids__gallery,
 .project-gallery--lavatop ids-gallery,
-.project-gallery--lavatop .ids__gallery {
+.project-gallery--lavatop .ids__gallery,
+.project-gallery--dodo ids-gallery,
+.project-gallery--dodo .ids__gallery {
   display: flex;
 }
 
 .project-gallery--rangos figure img,
 .project-gallery--rangos figure video,
 .project-gallery--lavatop figure img,
-.project-gallery--lavatop figure video {
+.project-gallery--lavatop figure video,
+.project-gallery--dodo figure img,
+.project-gallery--dodo figure video {
   width: 100%;
   display: block;
+}
+
+figure.project-figure--bordered {
+  position: relative;
+}
+
+figure.project-figure--bordered::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ids__wrapper[data-client-tag="sporos"] figure.project-figure--logo {
+  margin-top: calc(var(--ids__density) * 4em);
+  margin-bottom: calc(var(--ids__density) * 4em);
+}
+
+.ids__wrapper[data-client-tag="sporos"] figure.project-figure--logo a {
+  display: flex;
+  justify-content: center;
+}
+
+.ids__wrapper[data-client-tag="sporos"] figure.project-figure--logo img {
+  width: 50%;
+  max-width: 50%;
 }
 
 .portreit {
@@ -89,6 +122,7 @@ ids-gallery,
   width: 1.2em;
   height: 1.2em;
   margin-right: 0.1em;
+  margin-left: 0.3em;
   vertical-align: -0.3em;
 }
 
@@ -96,8 +130,21 @@ ids-gallery,
   white-space: nowrap;
 }
 
+.project-team {
+  font-weight: 400;
+}
+
+.project-team .project-text-emphasis:not(.project-team__label) {
+  font-weight: 800;
+}
+
 .project-team__role {
   color: var(--color-blue-50);
+  font-weight: 400;
+}
+
+.project-team__label {
+  font-weight: 400;
 }
 
 hr.default {

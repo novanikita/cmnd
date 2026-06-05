@@ -140,8 +140,58 @@ main {
   line-height: 1.2;
 }
 
+.ids h3[id],
+.ids [id].project-anchor {
+  scroll-margin-top: 3em;
+}
+
+.ids a.project-anchor-link {
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.ids a.project-anchor-link span:not(.project-anchor-arrow) {
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 0.3em;
+}
+
+.project-anchor-arrow {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.ids a.project-anchor-link:hover,
+.ids a.project-anchor-link:focus-visible {
+  opacity: 0.6;
+}
+
+.ids a.project-anchor-link:hover .project-anchor-arrow,
+.ids a.project-anchor-link:focus-visible .project-anchor-arrow {
+  transform: translateX(0.25em);
+}
+
 .project-text-emphasis {
   font-weight: 600;
+}
+
+.project-footnote-ref {
+  color: var(--color-blue);
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.ids p.project-footnote {
+  font-size: 0.7em;
+  color: var(--color-gray);
+  margin-top: 0;
+}
+
+.ids p.project-list {
+  margin-bottom: 0;
+  line-height: 2;
 }
 
 .ids p.project-case-text {

@@ -30,7 +30,8 @@
 
     var link = document.createElement('a');
     link.className = 'project-promo-link';
-    link.href = project.href || 'soon.html';
+    var linkPrefix = window.SITE_PROJECT_LINK_PREFIX || '';
+    link.href = linkPrefix + (project.href || 'soon.html');
     if (project.coverImages) link.setAttribute('data-cover-images', project.coverImages);
 
     var promo = document.createElement('div');

@@ -11,7 +11,12 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "preview" / "pages.json"
 NEEDLE = '<meta charset="utf-8" />'
 NOINDEX = '    <meta name="robots" content="noindex,nofollow">\n'
+# Assets/partials resolve from the site root; page-to-page links resolve inside
+# the token folder via SITE_PROJECT_LINK_PREFIX, so drafts never touch the root.
 BASE_TAG = '    <base href="../../">\n'
+
+# Support page copied into the token folder so portfolio "soon" links resolve there.
+SUPPORT_PAGES = ["soon.html"]
 
 
 def inject_head(text: str) -> str:
@@ -29,9 +34,21 @@ def inject_head(text: str) -> str:
     return text.replace(NEEDLE, NEEDLE + "\n" + insert, 1)
 
 
-def build_hub_html(pages: list[dict]) -> str:
+def inject_link_prefix(text: str, token: str) -> str:
+    """Make JS-rendered project cards link into the token folder."""
+    snippet = (
+        f'<script>window.SITE_PROJECT_LINK_PREFIX="preview/{token}/";</script>\n'
+        '    <script src="js/projects-render.js">'
+    )
+    target = '<script src="js/projects-render.js">'
+    if target in text and "SITE_PROJECT_LINK_PREFIX" not in text:
+        return text.replace(target, snippet, 1)
+    return text
+
+
+def build_hub_html(pages: list[dict], token: str) -> str:
     items = "\n".join(
-        f'        <li><a href="{pathlib.Path(p["file"]).name}">{p["titleRu"]}</a>'
+        f'        <li><a href="preview/{token}/{pathlib.Path(p["file"]).name}">{p["titleRu"]}</a>'
         f' <span lang="en">/ {p["titleEn"]}</span></li>'
         for p in pages
     )
@@ -109,12 +126,23 @@ def main() -> int:
         if not src.is_file():
             print(f"Missing source file: {src}", file=sys.stderr)
             return 1
+        html = inject_head(src.read_text(encoding="utf-8"))
+        if src.name == "portfolio.html":
+            html = inject_link_prefix(html, token)
+        dst = out_dir / src.name
+        dst.write_text(html, encoding="utf-8")
+        print(f"  {dst.relative_to(ROOT)}")
+
+    for support in SUPPORT_PAGES:
+        src = ROOT / support
+        if not src.is_file():
+            continue
         dst = out_dir / src.name
         dst.write_text(inject_head(src.read_text(encoding="utf-8")), encoding="utf-8")
         print(f"  {dst.relative_to(ROOT)}")
 
     hub = out_dir / "index.html"
-    hub.write_text(build_hub_html(pages), encoding="utf-8")
+    hub.write_text(build_hub_html(pages, token), encoding="utf-8")
     print(f"  {hub.relative_to(ROOT)}")
     print(f"\nPreview URL path: /preview/{token}/")
     return 0
