@@ -54,6 +54,10 @@
     document.addEventListener('site:header-ready', function () {
       applyLang(getSavedLang());
     });
+
+    document.addEventListener('site:projects-rendered', function () {
+      applyLang(getSavedLang());
+    });
   }
 
   if (document.readyState === 'loading') {

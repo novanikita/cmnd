@@ -76,8 +76,12 @@
       var more = document.createElement('a');
       more.className = 'projects-more-btn';
       more.href = 'soon.html';
+      more.setAttribute('data-i18n', '');
+      more.setAttribute('data-ru', 'Ещё проекты');
+      more.setAttribute('data-en', 'More projects');
       more.textContent = 'Ещё проекты';
       grid.appendChild(more);
+      if (window.SiteLang && window.SiteLang.apply) window.SiteLang.apply();
     }
 
     grid.dataset.projectsRendered = 'true';

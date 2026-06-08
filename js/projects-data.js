@@ -119,7 +119,7 @@
       {
         href: 'soon.html',
         typeTags: 'website',
-        coverImages: 'images/projects-cover/vi-cover.jpg',
+        coverImages: 'images/projects-cover/vi-cover.avif',
         titleRu: 'Ви.ру',
         titleEn: 'Vse Instrumenty'
       },
@@ -127,28 +127,28 @@
         itemClass: 'L',
         href: 'soon.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/pmk-park-cover.png',
+        coverImages: 'images/projects-cover/pmk-park-cover.avif',
         titleRu: 'ПМК Парк',
         titleEn: 'PMK Park'
       },
       {
         href: 'soon.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/shift-cover.jpg',
+        coverImages: 'images/projects-cover/shift-cover.avif',
         titleRu: 'Dodo Shift',
         titleEn: 'Dodo Shift'
       },
       {
         href: 'soon.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/ya-music-cover.jpg',
+        coverImages: 'images/projects-cover/ya-music-cover.avif',
         titleRu: 'Яндекс Музыка',
         titleEn: 'Yandex Music'
       },
       {
         href: 'soon.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/bandlink-cover.jpg',
+        coverImages: 'images/projects-cover/bandlink-cover.avif',
         titleRu: 'Bandlink',
         titleEn: 'Bandlink'
       }
