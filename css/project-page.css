@@ -191,7 +191,7 @@ main {
 
 .ids p.project-list {
   margin-bottom: 0;
-  line-height: 2;
+  line-height: 1.5;
 }
 
 .ids p.project-case-text {
@@ -237,6 +237,15 @@ main {
 
   .ids h3 {
     line-height: 1;
+  }
+
+  .ids p.project-list {
+    line-height: 1.2;
+  }
+
+  .ids p.project-list a.project-anchor-link {
+    display: inline-block;
+    margin-bottom: 1em;
   }
 
   .project-meta-wrap {

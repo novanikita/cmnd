@@ -117,40 +117,35 @@
         titleEn: '4 years at Dodo Pizza'
       },
       {
-        href: 'soon.html',
+        href: 'vi.html',
         typeTags: 'website',
         coverImages: 'images/projects-cover/vi-cover.avif',
+        promoClass: 'project-promo-round',
         titleRu: 'Ви.ру',
         titleEn: 'Vse Instrumenty'
       },
       {
-        itemClass: 'L',
         href: 'soon.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/pmk-park-cover.avif',
+        promoClass: 'project-promo-hard',
         titleRu: 'ПМК Парк',
         titleEn: 'PMK Park'
       },
       {
-        href: 'soon.html',
-        typeTags: 'branding',
-        coverImages: 'images/projects-cover/shift-cover.avif',
-        titleRu: 'Dodo Shift',
-        titleEn: 'Dodo Shift'
+        href: 'bandlink.html',
+        typeTags: 'website',
+        coverImages: 'images/projects-cover/bandlink-cover.avif',
+        promoClass: 'project-promo-round',
+        titleRu: 'Bandlink',
+        titleEn: 'Bandlink'
       },
       {
-        href: 'soon.html',
-        typeTags: 'branding',
+        href: 'yandex-music.html',
+        typeTags: 'website',
         coverImages: 'images/projects-cover/ya-music-cover.avif',
         titleRu: 'Яндекс Музыка',
         titleEn: 'Yandex Music'
-      },
-      {
-        href: 'soon.html',
-        typeTags: 'branding',
-        coverImages: 'images/projects-cover/bandlink-cover.avif',
-        titleRu: 'Bandlink',
-        titleEn: 'Bandlink'
       }
     ]
   };

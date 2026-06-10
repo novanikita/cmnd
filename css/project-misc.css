@@ -9,7 +9,10 @@ ids-gallery,
 .ids__wrapper[data-client-tag="yandex"] .project-gallery,
 .ids__wrapper[data-client-tag="audit"] .project-gallery,
 .ids__wrapper[data-client-tag="sber500"] .project-gallery,
-.ids__wrapper[data-client-tag="sporos"] .project-gallery {
+.ids__wrapper[data-client-tag="sporos"] .project-gallery,
+.ids__wrapper[data-client-tag="vi"] .project-gallery,
+.ids__wrapper[data-client-tag="yamusic"] .project-gallery,
+.ids__wrapper[data-client-tag="bandlink"] .project-gallery {
   display: block;
 }
 
@@ -20,7 +23,13 @@ ids-gallery,
 .ids__wrapper[data-client-tag="sber500"] ids-gallery,
 .ids__wrapper[data-client-tag="sber500"] .ids__gallery,
 .ids__wrapper[data-client-tag="sporos"] ids-gallery,
-.ids__wrapper[data-client-tag="sporos"] .ids__gallery {
+.ids__wrapper[data-client-tag="sporos"] .ids__gallery,
+.ids__wrapper[data-client-tag="vi"] ids-gallery,
+.ids__wrapper[data-client-tag="vi"] .ids__gallery,
+.ids__wrapper[data-client-tag="yamusic"] ids-gallery,
+.ids__wrapper[data-client-tag="yamusic"] .ids__gallery,
+.ids__wrapper[data-client-tag="bandlink"] ids-gallery,
+.ids__wrapper[data-client-tag="bandlink"] .ids__gallery {
   display: flex;
 }
 
@@ -47,6 +56,30 @@ ids-gallery,
 .project-gallery--dodo figure video {
   width: 100%;
   display: block;
+}
+
+.project-gallery--dodo ids-gallery figure.L.project-figure--soft-radius,
+.project-gallery--dodo .ids__gallery figure.L.project-figure--soft-radius {
+  border-radius: 0.6em;
+}
+
+@media screen and (max-width: 768px) {
+  .project-gallery--dodo ids-gallery figure.XL,
+  .project-gallery--dodo .ids__gallery figure.XL {
+    border-radius: 0.4em;
+  }
+
+  .project-gallery--dodo ids-gallery figure.L,
+  .project-gallery--dodo ids-gallery figure:not(.L):not(.XL),
+  .project-gallery--dodo .ids__gallery figure.L,
+  .project-gallery--dodo .ids__gallery figure:not(.L):not(.XL) {
+    border-radius: 0.3em;
+  }
+
+  .project-gallery--dodo ids-gallery figure.L.project-figure--soft-radius,
+  .project-gallery--dodo .ids__gallery figure.L.project-figure--soft-radius {
+    border-radius: 0.25em;
+  }
 }
 
 figure.project-figure--bordered {

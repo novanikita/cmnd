@@ -17,12 +17,15 @@ rsync -a \
   --exclude '.cursor' \
   --exclude '/about.html' \
   --exclude '/audit.html' \
+  --exclude '/bandlink.html' \
   --exclude '/dodo.html' \
   --exclude '/lavatop.html' \
   --exclude '/portfolio.html' \
   --exclude '/rangos.html' \
   --exclude '/sber500.html' \
   --exclude '/sporos.html' \
+  --exclude '/vi.html' \
+  --exclude '/yandex-music.html' \
   --exclude '/yandex.html' \
   "$ROOT/" "$SITE_DIR/"
 
