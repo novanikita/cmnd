@@ -2,51 +2,6 @@
   "token": "k7n2-a9q4-p3xr",
   "pages": [
     {
-      "file": "yandex.html",
-      "titleRu": "117 проектов для Яндекса",
-      "titleEn": "117 projects for Yandex"
-    },
-    {
-      "file": "lavatop.html",
-      "titleRu": "Lavatop",
-      "titleEn": "Lavatop"
-    },
-    {
-      "file": "rangos.html",
-      "titleRu": "Rangos",
-      "titleEn": "Rangos"
-    },
-    {
-      "file": "sber500.html",
-      "titleRu": "Sber500",
-      "titleEn": "Sber500"
-    },
-    {
-      "file": "sporos.html",
-      "titleRu": "Sporos",
-      "titleEn": "Sporos"
-    },
-    {
-      "file": "vi.html",
-      "titleRu": "Ви.ру",
-      "titleEn": "Vse Instrumenty"
-    },
-    {
-      "file": "yandex-music.html",
-      "titleRu": "Яндекс Музыка",
-      "titleEn": "Yandex Music"
-    },
-    {
-      "file": "bandlink.html",
-      "titleRu": "Bandlink",
-      "titleEn": "Bandlink"
-    },
-    {
-      "file": "dodo.html",
-      "titleRu": "4 года в Додо Пицце",
-      "titleEn": "4 years at Dodo Pizza"
-    },
-    {
       "file": "about.html",
       "titleRu": "О нас",
       "titleEn": "About"
@@ -55,11 +10,6 @@
       "file": "audit.html",
       "titleRu": "Аудит",
       "titleEn": "Audit"
-    },
-    {
-      "file": "portfolio.html",
-      "titleRu": "Все проекты",
-      "titleEn": "All projects"
     }
   ]
 }

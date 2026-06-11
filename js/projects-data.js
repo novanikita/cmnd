@@ -5,7 +5,7 @@
     index: [
       {
         itemClass: 'L',
-        href: 'soon.html',
+        href: 'yandex.html',
         coverImages:
           'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         promoClass: 'project-promo-soft',
@@ -13,7 +13,7 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: 'soon.html',
+        href: 'lavatop.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
@@ -22,7 +22,7 @@
         titleEn: 'Lavatop'
       },
       {
-        href: 'soon.html',
+        href: 'rangos.html',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
@@ -31,7 +31,7 @@
         titleEn: 'Rangos'
       },
       {
-        href: 'soon.html',
+        href: 'sber500.html',
         id: 'sber500',
         typeTags: 'events',
         coverImages:
@@ -41,7 +41,7 @@
         titleEn: 'Sber500'
       },
       {
-        href: 'soon.html',
+        href: 'sporos.html',
         id: 'sporos',
         typeTags: 'branding',
         coverImages:
@@ -53,7 +53,7 @@
       {
         id: 'dodo',
         itemClass: 'L',
-        href: 'soon.html',
+        href: 'dodo.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/dodo-cover-1.avif|images/projects-cover/dodo-cover-2.avif|images/projects-cover/dodo-cover-3.avif|images/projects-cover/dodo-cover-4.avif|images/projects-cover/dodo-cover-5.avif',

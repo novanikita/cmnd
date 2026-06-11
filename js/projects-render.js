@@ -75,7 +75,7 @@
     if (pageKey === 'index') {
       var more = document.createElement('a');
       more.className = 'projects-more-btn';
-      more.href = 'soon.html';
+      more.href = 'portfolio.html';
       more.setAttribute('data-i18n', '');
       more.setAttribute('data-ru', 'Ещё проекты');
       more.setAttribute('data-en', 'More projects');

@@ -17,7 +17,7 @@
     '</button>' +
     '<nav class="main-header__nav">' +
     '<a class="main-header__link" data-i18n data-key="nav.about" data-ru="О нас" data-en="About" href="soon.html">О нас</a>' +
-    '<a class="main-header__link" data-i18n data-key="nav.projects" data-ru="Проекты" data-en="Projects" href="soon.html">Проекты</a>' +
+    '<a class="main-header__link" data-i18n data-key="nav.projects" data-ru="Проекты" data-en="Projects" href="portfolio.html">Проекты</a>' +
     '<div class="lang-switcher" aria-label="Language switcher" role="group">' +
     '<button type="button" class="lang-switcher__btn is-active" data-lang-switch="ru" aria-pressed="true">РУ</button>' +
     '<button type="button" class="lang-switcher__btn" data-lang-switch="en" aria-pressed="false">EN</button>' +
