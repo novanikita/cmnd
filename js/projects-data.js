@@ -117,7 +117,7 @@
         titleEn: '4 years at Dodo Pizza'
       },
       {
-        href: 'vi.html',
+        href: 'soon.html',
         typeTags: 'website',
         coverImages: 'images/projects-cover/vi-cover.avif',
         promoClass: 'project-promo-round',
@@ -133,7 +133,7 @@
         titleEn: 'PMK Park'
       },
       {
-        href: 'bandlink.html',
+        href: 'soon.html',
         typeTags: 'website',
         coverImages: 'images/projects-cover/bandlink-cover.avif',
         promoClass: 'project-promo-round',
@@ -141,7 +141,7 @@
         titleEn: 'Bandlink'
       },
       {
-        href: 'yandex-music.html',
+        href: 'soon.html',
         typeTags: 'website',
         coverImages: 'images/projects-cover/ya-music-cover.avif',
         titleRu: 'Яндекс Музыка',

@@ -2,6 +2,21 @@
   "token": "k7n2-a9q4-p3xr",
   "pages": [
     {
+      "file": "vi.html",
+      "titleRu": "Ви.ру",
+      "titleEn": "Vse Instrumenty"
+    },
+    {
+      "file": "yandex-music.html",
+      "titleRu": "Яндекс Музыка",
+      "titleEn": "Yandex Music"
+    },
+    {
+      "file": "bandlink.html",
+      "titleRu": "Bandlink",
+      "titleEn": "Bandlink"
+    },
+    {
       "file": "about.html",
       "titleRu": "О нас",
       "titleEn": "About"
