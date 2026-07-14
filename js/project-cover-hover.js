@@ -3,13 +3,19 @@
 
   function parseCoverImages(value) {
     if (!value) return [];
-    // Use `|` as delimiter to avoid escaping issues with commas.
     return value.split('|').map(function (s) { return s.trim(); }).filter(Boolean);
   }
 
   function setPromoBackground(promoEl, imageUrl) {
     if (!promoEl || !imageUrl) return;
     promoEl.style.backgroundImage = "url('" + imageUrl + "')";
+    promoEl.style.backgroundColor = '';
+  }
+
+  function setPromoColor(promoEl, color) {
+    if (!promoEl || !color) return;
+    promoEl.style.backgroundImage = 'none';
+    promoEl.style.backgroundColor = color;
   }
 
   function updateCoverStrip(link, activeIndex) {
@@ -70,11 +76,9 @@
       });
     }
 
-    // If user starts interaction, warm up frames immediately.
     link.addEventListener('mouseenter', startPreload, { once: true, passive: true });
     link.addEventListener('touchstart', startPreload, { once: true, passive: true });
 
-    // Otherwise preload only when card is near viewport.
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         for (var i = 0; i < entries.length; i += 1) {
@@ -88,124 +92,135 @@
       return;
     }
 
-    // Older browsers: fallback to delayed preload after onload.
     afterInitialLoad(startPreload);
   }
 
-  function initProjectCovers() {
-    var cards = document.querySelectorAll('.project-promo-link[data-cover-images]');
-    if (!cards || !cards.length) return;
+  function setupCoverHover(link, frames, useColors) {
+    if (!frames.length) return;
 
-    cards.forEach(function (link) {
-      if (link.dataset.coverHoverInit === 'true') return;
-      link.dataset.coverHoverInit = 'true';
+    var promo = link.querySelector('.project-promo');
+    if (!promo) return;
 
-      var images = parseCoverImages(link.getAttribute('data-cover-images'));
-      if (!images.length) return;
+    var currentIndex = -1;
 
-      var promo = link.querySelector('.project-promo');
-      if (!promo) return;
-
-      var currentIndex = -1;
-      setPromoBackground(promo, images[0]);
-      currentIndex = 0;
-      updateCoverStrip(link, 0);
-      setupDeferredPreload(link, images);
-
-      var rafId = null;
-      var lastClientX = null;
-      var isTouchTracking = false;
-      var touchStartX = 0;
-      var touchStartY = 0;
-
-      function updateByClientX(clientX) {
-        if (clientX == null) return;
-        var rect = link.getBoundingClientRect();
-        var x = clientX - rect.left;
-        var ratio = rect.width > 0 ? x / rect.width : 0;
-        var idx = Math.floor(ratio * images.length);
-        if (idx < 0) idx = 0;
-        if (idx > images.length - 1) idx = images.length - 1;
-
-        if (idx !== currentIndex) {
-          currentIndex = idx;
-          setPromoBackground(promo, images[idx]);
-          updateCoverStrip(link, idx);
-        }
+    function applyFrame(index) {
+      if (useColors) {
+        setPromoColor(promo, frames[index]);
+      } else {
+        setPromoBackground(promo, frames[index]);
       }
+    }
 
-      link.addEventListener('mouseenter', function (e) {
-        lastClientX = e.clientX;
-        updateByClientX(lastClientX);
-      });
+    applyFrame(0);
+    currentIndex = 0;
+    updateCoverStrip(link, 0);
+    if (!useColors) setupDeferredPreload(link, frames);
 
-      link.addEventListener('mousemove', function (e) {
-        lastClientX = e.clientX;
-        if (rafId) return;
-        rafId = requestAnimationFrame(function () {
-          rafId = null;
-          updateByClientX(lastClientX);
-        });
-      }, { passive: true });
+    var rafId = null;
+    var lastClientX = null;
+    var isTouchTracking = false;
+    var touchStartX = 0;
+    var touchStartY = 0;
 
-      link.addEventListener('mouseleave', function () {
-        lastClientX = null;
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = null;
-        currentIndex = 0;
-        setPromoBackground(promo, images[0]);
-        updateCoverStrip(link, 0);
-      });
+    function updateByClientX(clientX) {
+      if (clientX == null) return;
+      var rect = link.getBoundingClientRect();
+      var x = clientX - rect.left;
+      var ratio = rect.width > 0 ? x / rect.width : 0;
+      var idx = Math.floor(ratio * frames.length);
+      if (idx < 0) idx = 0;
+      if (idx > frames.length - 1) idx = frames.length - 1;
 
-      link.addEventListener('touchstart', function (e) {
-        var touch = e.touches && e.touches[0];
-        if (!touch) return;
-        isTouchTracking = true;
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-        lastClientX = touch.clientX;
-        updateByClientX(lastClientX);
-      }, { passive: true });
-
-      link.addEventListener('touchmove', function (e) {
-        if (!isTouchTracking) return;
-        var touch = e.touches && e.touches[0];
-        if (!touch) return;
-
-        var deltaX = touch.clientX - touchStartX;
-        var deltaY = touch.clientY - touchStartY;
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          e.preventDefault();
-        }
-
-        lastClientX = touch.clientX;
-        if (rafId) return;
-        rafId = requestAnimationFrame(function () {
-          rafId = null;
-          updateByClientX(lastClientX);
-        });
-      }, { passive: false });
-
-      function stopTouchTracking() {
-        isTouchTracking = false;
-        touchStartX = 0;
-        touchStartY = 0;
-        lastClientX = null;
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = null;
-        currentIndex = 0;
-        setPromoBackground(promo, images[0]);
-        updateCoverStrip(link, 0);
+      if (idx !== currentIndex) {
+        currentIndex = idx;
+        applyFrame(idx);
+        updateCoverStrip(link, idx);
       }
+    }
 
-      link.addEventListener('touchend', stopTouchTracking, { passive: true });
-      link.addEventListener('touchcancel', stopTouchTracking, { passive: true });
+    link.addEventListener('mouseenter', function (e) {
+      lastClientX = e.clientX;
+      updateByClientX(lastClientX);
     });
 
+    link.addEventListener('mousemove', function (e) {
+      lastClientX = e.clientX;
+      if (rafId) return;
+      rafId = requestAnimationFrame(function () {
+        rafId = null;
+        updateByClientX(lastClientX);
+      });
+    }, { passive: true });
+
+    link.addEventListener('mouseleave', function () {
+      lastClientX = null;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      currentIndex = 0;
+      applyFrame(0);
+      updateCoverStrip(link, 0);
+    });
+
+    link.addEventListener('touchstart', function (e) {
+      var touch = e.touches && e.touches[0];
+      if (!touch) return;
+      isTouchTracking = true;
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      lastClientX = touch.clientX;
+      updateByClientX(lastClientX);
+    }, { passive: true });
+
+    link.addEventListener('touchmove', function (e) {
+      if (!isTouchTracking) return;
+      var touch = e.touches && e.touches[0];
+      if (!touch) return;
+
+      var deltaX = touch.clientX - touchStartX;
+      var deltaY = touch.clientY - touchStartY;
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        e.preventDefault();
+      }
+
+      lastClientX = touch.clientX;
+      if (rafId) return;
+      rafId = requestAnimationFrame(function () {
+        rafId = null;
+        updateByClientX(lastClientX);
+      });
+    }, { passive: false });
+
+    function stopTouchTracking() {
+      isTouchTracking = false;
+      touchStartX = 0;
+      touchStartY = 0;
+      lastClientX = null;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      currentIndex = 0;
+      applyFrame(0);
+      updateCoverStrip(link, 0);
+    }
+
+    link.addEventListener('touchend', stopTouchTracking, { passive: true });
+    link.addEventListener('touchcancel', stopTouchTracking, { passive: true });
+  }
+
+  function initProjectCovers() {
+    document.querySelectorAll('.project-promo-link[data-cover-images]').forEach(function (link) {
+      if (link.dataset.coverHoverInit === 'true') return;
+      link.dataset.coverHoverInit = 'true';
+      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-images')), false);
+    });
+
+    document.querySelectorAll('.project-promo-link[data-cover-colors]').forEach(function (link) {
+      if (link.dataset.coverHoverInit === 'true') return;
+      link.dataset.coverHoverInit = 'true';
+      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-colors')), true);
+    });
   }
 
   initProjectCovers();
   document.addEventListener('site:projects-rendered', initProjectCovers);
   document.addEventListener('site:header-ready', initProjectCovers);
 })();
-

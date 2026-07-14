@@ -141,10 +141,11 @@ a.projects-more-btn:focus-visible {
   color: #ff6900;
 }
 
-.team-grid {
+.ids .team-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 0;
+  row-gap: 3em;
 }
 
 .team-grid-item {
@@ -173,10 +174,57 @@ a.projects-more-btn:focus-visible {
   border-radius: 50em;
 }
 
-.team-name {
-  margin: 0.5em 0 3em;
-  font-size: 2em;
+.team-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-top: 0.5em;
+  font-size: 1.5em;
   line-height: 1.12;
+}
+
+.ids .team-meta h2.team-name {
+  margin: 0;
+  font-size: 1em;
+  line-height: inherit;
+  font-weight: 700;
+  color: var(--color-blue);
+}
+
+.team-meta .project-tag-chip {
+  font-size: 0.7em;
+}
+
+.ids p.team-bio {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  padding-right: 1em;
+  font-size: 1em;
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--color-blue);
+}
+
+.menu-promo-link {
+  cursor: default;
+}
+
+.menu-promo-meta {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4em;
+}
+
+.menu-promo-meta h2 {
+  margin: 0;
+}
+
+.ids p.menu-item-desc {
+  margin: 0;
+  padding-right: 1em;
+  font-size: 1em;
+  line-height: 1.25;
   font-weight: 400;
   color: var(--color-blue);
 }
@@ -187,15 +235,29 @@ a.projects-more-btn:focus-visible {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .team-grid {
+  .ids .team-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2.5em;
   }
 
-  .team-name {
+  .team-meta {
+    font-size: 1.3em;
+  }
+
+  .ids p.team-bio {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    padding-right: 0.5em;
+  }
+
+  .ids p.menu-item-desc {
+    font-size: 0.9em;
+    padding-right: 0.5em;
+  }
+
+  .menu-promo-meta h2 {
     font-size: 1.8em;
-    margin-bottom: 2em;
   }
-
   .projects-grid .projects-grid-item {
     grid-column: span 1;
   }
