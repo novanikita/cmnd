@@ -218,6 +218,8 @@ a.projects-more-btn:focus-visible {
 
 .menu-promo-meta h2 {
   margin: 0;
+  padding-right: 1em;
+  min-height: 2.24em;
 }
 
 .ids p.menu-item-desc {

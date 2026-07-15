@@ -95,6 +95,20 @@
     afterInitialLoad(startPreload);
   }
 
+  function updateMenuLabel(link, index) {
+    if (!link.hasAttribute('data-cover-labels-ru')) return;
+    var h2 = link.querySelector('.menu-promo-meta h2');
+    if (!h2) return;
+    var lang = (window.SiteLang && window.SiteLang.getCurrent())
+      || document.documentElement.getAttribute('data-lang')
+      || 'ru';
+    var labels = parseCoverImages(link.getAttribute('data-cover-labels-' + lang));
+    if (!labels.length) labels = parseCoverImages(link.getAttribute('data-cover-labels-ru'));
+    if (index < 0 || index >= labels.length) return;
+    link.dataset.menuCoverIndex = String(index);
+    h2.textContent = labels[index];
+  }
+
   function setupCoverHover(link, frames, useColors) {
     if (!frames.length) return;
 
@@ -114,6 +128,7 @@
     applyFrame(0);
     currentIndex = 0;
     updateCoverStrip(link, 0);
+    updateMenuLabel(link, 0);
     if (!useColors) setupDeferredPreload(link, frames);
 
     var rafId = null;
@@ -135,6 +150,7 @@
         currentIndex = idx;
         applyFrame(idx);
         updateCoverStrip(link, idx);
+        updateMenuLabel(link, idx);
       }
     }
 
@@ -159,6 +175,7 @@
       currentIndex = 0;
       applyFrame(0);
       updateCoverStrip(link, 0);
+      updateMenuLabel(link, 0);
     });
 
     link.addEventListener('touchstart', function (e) {
@@ -200,10 +217,19 @@
       currentIndex = 0;
       applyFrame(0);
       updateCoverStrip(link, 0);
+      updateMenuLabel(link, 0);
     }
 
     link.addEventListener('touchend', stopTouchTracking, { passive: true });
     link.addEventListener('touchcancel', stopTouchTracking, { passive: true });
+  }
+
+  function refreshMenuLabels() {
+    document.querySelectorAll('.menu-promo-link[data-cover-labels-ru]').forEach(function (link) {
+      var index = parseInt(link.dataset.menuCoverIndex || '0', 10);
+      if (Number.isNaN(index)) index = 0;
+      updateMenuLabel(link, index);
+    });
   }
 
   function initProjectCovers() {
@@ -223,4 +249,8 @@
   initProjectCovers();
   document.addEventListener('site:projects-rendered', initProjectCovers);
   document.addEventListener('site:header-ready', initProjectCovers);
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-lang-switch]')) return;
+    window.setTimeout(refreshMenuLabels, 0);
+  });
 })();
