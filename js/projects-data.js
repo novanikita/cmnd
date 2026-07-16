@@ -118,34 +118,23 @@
       },
       {
         href: 'soon.html',
-        typeTags: 'website',
-        coverImages: 'images/projects-cover/vi-cover.avif',
-        promoClass: 'project-promo-round',
-        titleRu: 'Ви.ру',
-        titleEn: 'Vse Instrumenty'
+        typeTags: 'branding',
+        coverImages: 'images/projects-cover/kim-chips-cover.avif',
+        promoClass: 'project-promo-soft',
+        titleRu: 'Кимчипсы',
+        titleEn: 'Kimchips',
+        badgeRu: 'скоро покажем',
+        badgeEn: 'coming soon'
       },
       {
         href: 'soon.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/pmk-park-cover.avif',
+        coverImages: 'images/projects-cover/toolpar-cover.avif',
         promoClass: 'project-promo-hard',
-        titleRu: 'ПМК Парк',
-        titleEn: 'PMK Park'
-      },
-      {
-        href: 'soon.html',
-        typeTags: 'website',
-        coverImages: 'images/projects-cover/bandlink-cover.avif',
-        promoClass: 'project-promo-round',
-        titleRu: 'Bandlink',
-        titleEn: 'Bandlink'
-      },
-      {
-        href: 'soon.html',
-        typeTags: 'website',
-        coverImages: 'images/projects-cover/ya-music-cover.avif',
-        titleRu: 'Яндекс Музыка',
-        titleEn: 'Yandex Music'
+        titleRu: 'Toolpar',
+        titleEn: 'Toolpar',
+        badgeRu: 'скоро покажем',
+        badgeEn: 'coming soon'
       }
     ]
   };

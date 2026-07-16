@@ -51,6 +51,17 @@
     title.textContent = project.titleRu || '';
 
     meta.appendChild(title);
+
+    if (project.badgeRu || project.badgeEn) {
+      var badge = document.createElement('span');
+      badge.className = 'project-tag-chip project-tag-chip--soon';
+      badge.setAttribute('data-i18n', '');
+      badge.setAttribute('data-ru', project.badgeRu || project.badgeEn || '');
+      badge.setAttribute('data-en', project.badgeEn || project.badgeRu || '');
+      badge.textContent = project.badgeRu || project.badgeEn || '';
+      meta.appendChild(badge);
+    }
+
     link.appendChild(promo);
     var coverImages = parseCoverImages(project.coverImages);
     if (coverImages.length > 1) {

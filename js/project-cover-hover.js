@@ -97,8 +97,8 @@
 
   function updateMenuLabel(link, index) {
     if (!link.hasAttribute('data-cover-labels-ru')) return;
-    var h2 = link.querySelector('.menu-promo-meta h2');
-    if (!h2) return;
+    var desc = link.querySelector('.menu-item-desc');
+    if (!desc) return;
     var lang = (window.SiteLang && window.SiteLang.getCurrent())
       || document.documentElement.getAttribute('data-lang')
       || 'ru';
@@ -106,7 +106,7 @@
     if (!labels.length) labels = parseCoverImages(link.getAttribute('data-cover-labels-ru'));
     if (index < 0 || index >= labels.length) return;
     link.dataset.menuCoverIndex = String(index);
-    h2.textContent = labels[index];
+    desc.textContent = labels[index];
   }
 
   function setupCoverHover(link, frames, useColors) {

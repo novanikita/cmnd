@@ -155,12 +155,15 @@ figure.project-figure--bordered::after {
   width: 1.2em;
   height: 1.2em;
   margin-right: 0.1em;
-  margin-left: 0.3em;
   vertical-align: -0.3em;
 }
 
 .project-team__member {
   white-space: nowrap;
+}
+
+.project-team__member:not(:last-child) {
+  margin-right: 0.5em;
 }
 
 .project-team {
