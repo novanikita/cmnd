@@ -121,10 +121,10 @@
         typeTags: 'branding',
         coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-soft',
-        titleRu: 'Кимчипсы',
-        titleEn: 'Kimchips',
-        badgeRu: 'скоро покажем',
-        badgeEn: 'coming soon'
+        titleRu: 'Ким чипсы',
+        titleEn: 'Kim Chips',
+        badgeRu: 'в работе',
+        badgeEn: 'in progress'
       },
       {
         href: 'soon.html',
@@ -133,8 +133,8 @@
         promoClass: 'project-promo-hard',
         titleRu: 'Toolpar',
         titleEn: 'Toolpar',
-        badgeRu: 'скоро покажем',
-        badgeEn: 'coming soon'
+        badgeRu: 'в работе',
+        badgeEn: 'in progress'
       }
     ]
   };
