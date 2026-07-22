@@ -125,6 +125,11 @@ figure.project-figure--bordered::after {
   display: block;
 }
 
+.portreit--zoom img {
+  transform: scale(2.2) translateY(-8%);
+  transform-origin: 50% 18%;
+}
+
 .portraits-inline {
   display: inline-flex;
   align-items: flex-end;

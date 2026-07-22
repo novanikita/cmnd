@@ -31,10 +31,17 @@
       font-size: 3em;
       line-height: 1;
       font-weight: 500;
-      max-width: 16em;
 
       @media screen and (max-width: 768px) {
         font-size: 2em;
+      }
+    }
+
+    &.quote.quote--page {
+      max-width: 70%;
+
+      @media screen and (max-width: 768px) {
+        max-width: 100%;
       }
     }
 

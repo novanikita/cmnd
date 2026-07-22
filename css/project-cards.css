@@ -163,6 +163,177 @@ a.projects-more-btn:focus-visible {
   color: #ff6900;
 }
 
+.founder-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2em;
+  align-items: start;
+}
+
+.founder-quote {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.founder-quote__content {
+  flex: 1 1 auto;
+}
+
+.ids .founder-quote__lead {
+  margin: 0 0 0.75em;
+  font-size: 2em;
+  line-height: 1.1;
+  font-weight: 500;
+  color: var(--color-blue);
+}
+
+.ids .founder-quote__content > :last-child,
+.ids .founder-quote > :last-child:not(.founder-quote__byline) {
+  margin-bottom: 0;
+}
+
+.ids .founder-quote__lead + .about,
+.ids .founder-quote .about + .founder-quote__lead {
+  margin-top: 1em;
+}
+
+.ids .founder-quote .about {
+  margin-top: 0.6em;
+  margin-bottom: 0;
+  font-size: 1.3em;
+}
+
+.ids .founder-quote .about:first-child {
+  margin-top: 0;
+}
+
+.founder-quote__byline {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  order: -1;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  color: var(--color-blue);
+}
+
+.founder-quote__byline .portreit {
+  width: 2.2em;
+  height: 2.2em;
+  flex-shrink: 0;
+}
+
+.founder-quote__byline-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05em;
+  line-height: 1.15;
+}
+
+.founder-quote__name {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.founder-quote__role {
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--color-blue-50);
+}
+
+.founder-quote--max,
+.founder-quote--max .founder-quote__lead,
+.founder-quote--max .about,
+.founder-quote--max .founder-quote__byline,
+.founder-quote--max .founder-quote__name {
+  color: var(--color-orange);
+}
+
+.founder-quote--max .founder-quote__role {
+  color: rgba(255, 105, 0, 0.5);
+}
+
+.ids .founder-quote__cta {
+  display: inline-block;
+  margin: 0.75em 0 0;
+  font-size: 2em;
+  line-height: 1.1;
+  font-weight: 500;
+  color: var(--color-orange);
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  background: transparent;
+  transition: none;
+}
+
+.ids .founder-quote__cta:visited {
+  color: var(--color-orange);
+  text-decoration-color: var(--color-orange);
+}
+
+.ids .founder-quote__cta:hover,
+.ids .founder-quote__cta:focus-visible {
+  color: var(--color-blue);
+  text-decoration-color: var(--color-blue);
+}
+
+.space-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5em;
+}
+
+.space-images__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2em;
+  object-fit: cover;
+}
+
+.process-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5em;
+}
+
+.process-card {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 1.2em 1.5em 5em;
+  border-radius: 2em;
+  background-color: var(--color-blue-10);
+  color: var(--color-blue);
+}
+
+.ids .process-card__label {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.ids .process-card__title {
+  margin: 1.2em 0 0;
+  font-size: 1.8em;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.ids .process-card__text {
+  margin: 0.7em 0 0;
+  font-size: 1em;
+  line-height: 1.25;
+  font-weight: 400;
+}
+
+.ids .process-card__text + .process-card__text {
+  margin-top: 0.55em;
+}
+
 .ids .team-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -171,7 +342,7 @@ a.projects-more-btn:focus-visible {
 }
 
 .ids .team-grid--extended {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .ids .team-grid--extended .team-meta {
@@ -269,6 +440,40 @@ a.projects-more-btn:focus-visible {
 }
 
 @media screen and (max-width: 768px) {
+  .founder-quotes {
+    grid-template-columns: 1fr;
+    row-gap: 3em;
+  }
+
+  .ids .founder-quote__lead {
+    font-size: 1.5em;
+  }
+
+  .ids .founder-quote__cta {
+    font-size: 1.5em;
+  }
+
+  .space-images {
+    gap: 0.4em;
+  }
+
+  .space-images__img {
+    border-radius: 1.2em;
+  }
+
+  .process-cards {
+    grid-template-columns: 1fr;
+    gap: 0.5em;
+  }
+
+  .process-card {
+    border-radius: 1.2em;
+  }
+
+  .ids .process-card__title {
+    font-size: 1.5em;
+  }
+
   .projects-grid {
     column-gap: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
