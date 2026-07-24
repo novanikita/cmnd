@@ -223,10 +223,6 @@ a.projects-more-btn:focus-visible {
   margin-bottom: 0;
 }
 
-.ids .founder-quote__lead + .about {
-  margin-top: 0.5em;
-}
-
 .ids .founder-quote .about + .founder-quote__lead {
   margin-top: 1em;
 }
@@ -235,6 +231,10 @@ a.projects-more-btn:focus-visible {
   margin-top: 0.6em;
   margin-bottom: 0;
   font-size: 1.3em;
+}
+
+.ids .founder-quote__lead + .about {
+  margin-top: 0.5em;
 }
 
 .ids .founder-quote .about:first-child {

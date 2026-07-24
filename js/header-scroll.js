@@ -5,12 +5,6 @@
   var LOGO_SHRINK_DISTANCE = 260;
   var MOBILE_MAX_WIDTH = 768;
 
-  function isCasePage() {
-    return Boolean(
-      document.querySelector('.project-case-text, .project-gallery, .project-meta, ids-gallery, .ids__gallery')
-    );
-  }
-
   function isMobileViewport() {
     return window.matchMedia('(max-width: ' + MOBILE_MAX_WIDTH + 'px)').matches;
   }
@@ -30,7 +24,7 @@
   }
 
   function syncHeaderLogoScale(header) {
-    if (!header || !isCasePage()) return;
+    if (!header) return;
     if (isMobileViewport()) {
       resetHeaderInlineStyles(header);
       return;
@@ -71,16 +65,16 @@
   }
 
   function initHeaderScroll() {
-    var header = document.querySelector('header');
+    var header = document.querySelector('header.main-header') || document.querySelector('header');
     if (!header) return;
+
     header.classList.remove('is-hidden');
-    if (isCasePage()) {
-      header.classList.add('is-fixed-on-case');
-      reserveHeaderSpace(header);
-      header.__logoExpandedPx = 0;
-      header.__rightMarginTopExpandedPx = -1;
-      syncHeaderLogoScale(header);
-    }
+    header.classList.add('is-fixed-on-case');
+    reserveHeaderSpace(header);
+    header.__logoExpandedPx = 0;
+    header.__rightMarginTopExpandedPx = -1;
+    syncHeaderLogoScale(header);
+
     if (!header.__compactScrollBound) {
       window.addEventListener('scroll', function () {
         syncHeaderLogoScale(header);
