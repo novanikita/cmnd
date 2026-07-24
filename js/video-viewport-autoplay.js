@@ -17,9 +17,13 @@
   }
 
   function upsertSoundToggle(video) {
-    if (!isYandexCasePage) return;
     if (!video || !video.parentElement) return;
     if (isSoundToggleDisabled(video)) return;
+
+    var allowToggle =
+      isYandexCasePage ||
+      String(video.getAttribute('data-sound-toggle') || '').trim().toLowerCase() === 'on';
+    if (!allowToggle) return;
 
     var host = video.closest('figure') || video.parentElement;
     if (!host) return;

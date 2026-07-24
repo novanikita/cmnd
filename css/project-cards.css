@@ -56,6 +56,36 @@
   border-radius: 50em;
 }
 
+.project-promo--sound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.menu-promo-link--sound:hover .project-promo--sound,
+.menu-promo-link--sound:focus-visible .project-promo--sound,
+.menu-promo-link--sound.is-playing .project-promo--sound {
+  background-color: var(--color-orange);
+}
+
+.menu-sound-icon {
+  width: min(70%, 12em);
+  aspect-ratio: 1;
+  display: block;
+  background-color: currentColor;
+  mask: url('/images/icon/sound-2.svg') center / contain no-repeat;
+  -webkit-mask: url('/images/icon/sound-2.svg') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.menu-promo-link--sound {
+  cursor: pointer;
+}
+
 .project-cover-strip {
   display: flex;
   align-items: center;
@@ -181,7 +211,7 @@ a.projects-more-btn:focus-visible {
 }
 
 .ids .founder-quote__lead {
-  margin: 0 0 0.75em;
+  margin: 0 0 0.375em;
   font-size: 2em;
   line-height: 1.1;
   font-weight: 500;
@@ -193,7 +223,10 @@ a.projects-more-btn:focus-visible {
   margin-bottom: 0;
 }
 
-.ids .founder-quote__lead + .about,
+.ids .founder-quote__lead + .about {
+  margin-top: 0.5em;
+}
+
 .ids .founder-quote .about + .founder-quote__lead {
   margin-top: 1em;
 }
@@ -363,7 +396,8 @@ a.projects-more-btn:focus-visible {
   width: 100%;
   aspect-ratio: 1 / 1;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   border-radius: var(--project-radius);
   background-color: var(--color-blue-10);
 }
@@ -386,7 +420,7 @@ a.projects-more-btn:focus-visible {
   flex-wrap: wrap;
   column-gap: 0.4em;
   row-gap: 0;
-  margin-top: 0.5em;
+  margin-top: 0.75em;
   font-size: 1.2em;
   line-height: 1.12;
 }
@@ -421,7 +455,7 @@ a.projects-more-btn:focus-visible {
 .menu-promo-meta {
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.4em;
+  gap: 0;
 }
 
 .menu-promo-meta h2 {

@@ -18,6 +18,42 @@
     promoEl.style.backgroundColor = color;
   }
 
+  function setPromoVideo(promoEl, videoUrl) {
+    if (!promoEl || !videoUrl) return;
+    var video = promoEl.querySelector('video');
+    if (!video) return;
+
+    var source = video.querySelector('source');
+    var current = source ? source.getAttribute('src') : (video.getAttribute('src') || '');
+    if (current === videoUrl) return;
+
+    var wasMuted = video.muted !== false;
+    if (source) {
+      source.setAttribute('src', videoUrl);
+    } else {
+      video.setAttribute('src', videoUrl);
+    }
+    video.load();
+    video.muted = wasMuted;
+    if (wasMuted) {
+      video.setAttribute('muted', '');
+    } else {
+      video.removeAttribute('muted');
+    }
+
+    var playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(function () {});
+    }
+
+    var button = promoEl.querySelector('.video-sound-toggle');
+    if (button) {
+      button.classList.toggle('is-on', !wasMuted);
+      button.setAttribute('aria-label', wasMuted ? 'Включить звук' : 'Выключить звук');
+      button.setAttribute('aria-pressed', String(!wasMuted));
+    }
+  }
+
   function updateCoverStrip(link, activeIndex) {
     var strip = link.querySelector('.project-cover-strip');
     if (!strip) return;
@@ -109,7 +145,7 @@
     desc.textContent = labels[index];
   }
 
-  function setupCoverHover(link, frames, useColors) {
+  function setupCoverHover(link, frames, useColors, useVideos) {
     if (!frames.length) return;
 
     var promo = link.querySelector('.project-promo');
@@ -118,7 +154,9 @@
     var currentIndex = -1;
 
     function applyFrame(index) {
-      if (useColors) {
+      if (useVideos) {
+        setPromoVideo(promo, frames[index]);
+      } else if (useColors) {
         setPromoColor(promo, frames[index]);
       } else {
         setPromoBackground(promo, frames[index]);
@@ -129,7 +167,7 @@
     currentIndex = 0;
     updateCoverStrip(link, 0);
     updateMenuLabel(link, 0);
-    if (!useColors) setupDeferredPreload(link, frames);
+    if (!useColors && !useVideos) setupDeferredPreload(link, frames);
 
     var rafId = null;
     var lastClientX = null;
@@ -233,16 +271,120 @@
   }
 
   function initProjectCovers() {
+    document.querySelectorAll('.project-promo-link[data-cover-videos]').forEach(function (link) {
+      if (link.dataset.coverHoverInit === 'true') return;
+      link.dataset.coverHoverInit = 'true';
+      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-videos')), false, true);
+    });
+
     document.querySelectorAll('.project-promo-link[data-cover-images]').forEach(function (link) {
       if (link.dataset.coverHoverInit === 'true') return;
       link.dataset.coverHoverInit = 'true';
-      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-images')), false);
+      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-images')), false, false);
     });
 
     document.querySelectorAll('.project-promo-link[data-cover-colors]').forEach(function (link) {
       if (link.dataset.coverHoverInit === 'true') return;
       link.dataset.coverHoverInit = 'true';
-      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-colors')), true);
+      setupCoverHover(link, parseCoverImages(link.getAttribute('data-cover-colors')), true, false);
+    });
+
+    document.querySelectorAll('.menu-promo-link--sound[data-sound-samples]').forEach(function (link) {
+      if (link.dataset.soundMenuInit === 'true') return;
+      link.dataset.soundMenuInit = 'true';
+      setupSoundMenu(link);
+    });
+  }
+
+  function setupSoundMenu(link) {
+    var samples = parseCoverImages(link.getAttribute('data-sound-samples'));
+    if (!samples.length) return;
+
+    var currentIndex = 0;
+    var audio = null;
+    var rafId = null;
+    var lastClientX = null;
+
+    link.dataset.menuCoverIndex = '0';
+    updateCoverStrip(link, 0);
+    updateMenuLabel(link, 0);
+
+    function setIndex(index) {
+      if (index < 0) index = 0;
+      if (index > samples.length - 1) index = samples.length - 1;
+      if (index === currentIndex) return;
+      currentIndex = index;
+      updateCoverStrip(link, index);
+      updateMenuLabel(link, index);
+    }
+
+    function updateByClientX(clientX) {
+      if (clientX == null) return;
+      var rect = link.getBoundingClientRect();
+      var ratio = rect.width > 0 ? (clientX - rect.left) / rect.width : 0;
+      var idx = Math.floor(ratio * samples.length);
+      setIndex(idx);
+    }
+
+    function stopAudio() {
+      if (!audio) return;
+      audio.pause();
+      audio.currentTime = 0;
+      audio = null;
+      link.classList.remove('is-playing');
+    }
+
+    function playCurrent() {
+      var src = samples[currentIndex];
+      if (!src) return;
+
+      if (audio && audio.dataset.sampleSrc === src && !audio.paused) {
+        stopAudio();
+        return;
+      }
+
+      stopAudio();
+      audio = new Audio(src);
+      audio.dataset.sampleSrc = src;
+      link.classList.add('is-playing');
+      audio.addEventListener('ended', function () {
+        link.classList.remove('is-playing');
+        audio = null;
+      });
+      var playPromise = audio.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(function () {
+          link.classList.remove('is-playing');
+          audio = null;
+        });
+      }
+    }
+
+    link.addEventListener('mousemove', function (e) {
+      lastClientX = e.clientX;
+      if (rafId) return;
+      rafId = requestAnimationFrame(function () {
+        rafId = null;
+        updateByClientX(lastClientX);
+      });
+    }, { passive: true });
+
+    link.addEventListener('mouseleave', function () {
+      lastClientX = null;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+      setIndex(0);
+    });
+
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      playCurrent();
+    });
+
+    link.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      playCurrent();
     });
   }
 
