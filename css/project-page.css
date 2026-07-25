@@ -67,6 +67,17 @@ main {
   text-decoration-color: #ff6900;
 }
 
+.founder-quote--max .quote-word {
+  color: var(--color-orange);
+  text-decoration-color: var(--color-orange);
+}
+
+.founder-quote--max .quote-word:hover,
+.founder-quote--max .quote-word.is-active {
+  color: var(--color-blue);
+  text-decoration-color: var(--color-blue);
+}
+
 .quote-tooltip {
   position: absolute;
   left: 0;
@@ -90,9 +101,19 @@ main {
   margin: 0;
   width: 17em;
   max-width: 17em;
-  padding: 1em 1em 3em 1em;
+  padding: 1em;
   font-size: 1em;
   color: var(--color-white);
+  white-space: pre-line;
+}
+
+.quote-tooltip--wide .quote-tooltip__text {
+  width: 28em;
+  max-width: min(28em, 90vw);
+}
+
+.quote-tooltip--aside {
+  max-width: calc(50% - 2em);
 }
 
 .project-date {
@@ -233,6 +254,11 @@ main {
     padding: 0.8em 0.9em 0.7em 0.9em;
     font-size: 0.86em;
     line-height: 1.2;
+  }
+
+  .quote-tooltip--wide .quote-tooltip__text {
+    width: 24em;
+    max-width: min(24em, 88vw);
   }
 
   .ids h3 {
