@@ -48,12 +48,35 @@
     return wrapper.querySelector('.quote-tooltip');
   }
 
+  function resetTooltipPosition(tooltip) {
+    tooltip.style.left = '';
+    tooltip.style.top = '';
+  }
+
   function hideTooltip() {
     if (Date.now() < suppressHideUntil) return;
     if (activeWord) activeWord.classList.remove('is-active');
     if (activeTooltip) {
-      activeTooltip.classList.remove('is-visible');
-      activeTooltip.setAttribute('aria-hidden', 'true');
+      var tooltip = activeTooltip;
+      tooltip.classList.remove('is-visible');
+      tooltip.setAttribute('aria-hidden', 'true');
+
+      var cleared = false;
+      function clearPosition() {
+        if (cleared || tooltip.classList.contains('is-visible')) return;
+        cleared = true;
+        resetTooltipPosition(tooltip);
+      }
+
+      tooltip.addEventListener(
+        'transitionend',
+        function onEnd(event) {
+          if (event.propertyName !== 'opacity') return;
+          tooltip.removeEventListener('transitionend', onEnd);
+          clearPosition();
+        }
+      );
+      window.setTimeout(clearPosition, 520);
     }
     activeWord = null;
     activeTooltip = null;
@@ -103,21 +126,24 @@
         wordEl.closest('.quote-words-root') ||
         wordEl;
       var blockRect = block.getBoundingClientRect();
-      var asideGap = (parseFloat(getComputedStyle(tooltipText).fontSize) || 16) * 1.2;
       top = blockRect.top - containerRect.top;
-      left = blockRect.right - containerRect.left + asideGap;
-      maxLeft = containerRect.width - containerPadRight - tooltipWidth;
+      tooltip.style.left = '';
+      tooltip.style.top = top + 'px';
+    } else if (placeAside && isMobile) {
+      tooltip.style.left = '';
+      tooltip.style.top = '';
     } else {
       top = wordRect.bottom - containerRect.top + gapPx;
       left = wordRect.left - containerRect.left;
+
+      if (maxLeft < minLeft) maxLeft = minLeft;
+      if (left < minLeft) left = minLeft;
+      if (left > maxLeft) left = maxLeft;
+
+      tooltip.style.left = left + 'px';
+      tooltip.style.top = top + 'px';
     }
 
-    if (maxLeft < minLeft) maxLeft = minLeft;
-    if (left < minLeft) left = minLeft;
-    if (left > maxLeft) left = maxLeft;
-
-    tooltip.style.left = left + 'px';
-    tooltip.style.top = top + 'px';
     tooltip.classList.add('is-visible');
     tooltip.setAttribute('aria-hidden', 'false');
   }
@@ -164,5 +190,10 @@
     var clickedTooltip = target && target.closest && target.closest('.quote-tooltip');
     if (clickedWord || clickedTooltip) return;
     hideTooltip();
+  });
+
+  document.addEventListener('site:lang-changed', function () {
+    if (!activeWord || !activeTooltip) return;
+    showTooltip(activeWord);
   });
 })();

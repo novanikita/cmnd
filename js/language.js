@@ -16,6 +16,7 @@
   function applyLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) return;
     document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
 
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-key');
@@ -35,6 +36,8 @@
       btn.classList.toggle('is-active', isActive);
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
+
+    document.dispatchEvent(new CustomEvent('site:lang-changed', { detail: { lang: lang } }));
   }
 
   function setLang(lang) {

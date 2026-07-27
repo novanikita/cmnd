@@ -25,7 +25,7 @@ header.is-hidden {
   font-weight: 600;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.2em;
   width: 100%;
   max-width: 100%;
@@ -53,8 +53,8 @@ header.is-hidden {
   line-height: 0.9;
   font-weight: 900;
   white-space: nowrap;
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  margin-top: 0.05em;
+  margin-bottom: 0;
   transition: none;
 }
 
@@ -92,7 +92,7 @@ header.is-hidden {
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 2.5em;
-  margin-top: 0;
+  margin-top: clamp(0.4em, 2.6vw, 2.5em);
   min-width: max-content;
   transition: none;
 }

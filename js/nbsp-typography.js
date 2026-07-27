@@ -79,6 +79,7 @@
 
     document.addEventListener('site:header-ready', apply);
     document.addEventListener('site:projects-rendered', apply);
+    document.addEventListener('site:lang-changed', apply);
     document.addEventListener('click', function (e) {
       var switcher = e.target && e.target.closest ? e.target.closest('[data-lang-switch]') : null;
       if (!switcher) return;

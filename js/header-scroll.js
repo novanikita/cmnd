@@ -4,6 +4,9 @@
   var LOGO_MIN_EM = 2;
   var LOGO_SHRINK_DISTANCE = 260;
   var MOBILE_MAX_WIDTH = 768;
+  var LOGO_MARGIN_TOP_START_EM = 0.05;
+  var LOGO_MARGIN_TOP_END_EM = 0.2;
+  var LOGO_MARGIN_BOTTOM_END_EM = 0.2;
 
   function isMobileViewport() {
     return window.matchMedia('(max-width: ' + MOBILE_MAX_WIDTH + 'px)').matches;
@@ -19,7 +22,11 @@
     if (!header) return;
     var logoLink = header.querySelector('.main-header__left .logo a');
     var rightBlock = header.querySelector('.main-header__right');
-    if (logoLink) logoLink.style.fontSize = '';
+    if (logoLink) {
+      logoLink.style.fontSize = '';
+      logoLink.style.marginTop = '';
+      logoLink.style.marginBottom = '';
+    }
     if (rightBlock) rightBlock.style.marginTop = '';
   }
 
@@ -45,12 +52,19 @@
     var currentPx = expandedPx - (expandedPx - minPx) * progress;
 
     logoLink.style.fontSize = currentPx + 'px';
+    logoLink.style.marginTop = (LOGO_MARGIN_TOP_START_EM + (LOGO_MARGIN_TOP_END_EM - LOGO_MARGIN_TOP_START_EM) * progress) + 'em';
+    logoLink.style.marginBottom = (LOGO_MARGIN_BOTTOM_END_EM * progress) + 'em';
 
     if (rightBlock) {
       if (!header.__rightMarginTopExpandedPx || header.__rightMarginTopExpandedPx < 0) {
         header.__rightMarginTopExpandedPx = parseFloat(window.getComputedStyle(rightBlock).marginTop) || 0;
       }
-      var currentRightMarginTopPx = header.__rightMarginTopExpandedPx * (1 - progress);
+
+      var headerHeight = header.getBoundingClientRect().height;
+      var rightHeight = rightBlock.getBoundingClientRect().height;
+      var centerMarginTopPx = Math.max(0, (headerHeight - rightHeight) / 2);
+      var expandedMarginPx = header.__rightMarginTopExpandedPx;
+      var currentRightMarginTopPx = expandedMarginPx * (1 - progress) + centerMarginTopPx * progress;
       rightBlock.style.marginTop = currentRightMarginTopPx + 'px';
     }
   }

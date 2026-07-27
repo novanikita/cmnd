@@ -42,6 +42,16 @@
   text-decoration-color: #ff6900;
 }
 
+.about-how-we-work-cta .project-anchor-arrow {
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.about-how-we-work-cta .main-page-header__cta:hover .project-anchor-arrow,
+.about-how-we-work-cta .main-page-header__cta:focus-visible .project-anchor-arrow {
+  transform: translateX(0.1em);
+}
+
 .ids__wrapper {
   overflow-wrap: anywhere;
 }
@@ -113,7 +123,14 @@ main {
 }
 
 .quote-tooltip--aside {
+  left: 15em;
   max-width: calc(50% - 2em);
+}
+
+.quote-tooltip--aside.quote-tooltip--wide .quote-tooltip__text {
+  width: 31em;
+  max-width: min(31em, 90vw);
+  padding: 1.6em;
 }
 
 .project-date {
@@ -259,6 +276,31 @@ main {
   .quote-tooltip--wide .quote-tooltip__text {
     width: 24em;
     max-width: min(24em, 88vw);
+  }
+
+  .quote-tooltip--aside {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    max-width: none;
+    z-index: 1300;
+    border-radius: 0;
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s ease;
+  }
+
+  .quote-tooltip--aside.is-visible {
+    transition: opacity 0s linear, visibility 0s linear, transform 0s linear;
+  }
+
+  .quote-tooltip--aside .quote-tooltip__text,
+  .quote-tooltip--aside.quote-tooltip--wide .quote-tooltip__text {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 1.6em;
   }
 
   .ids h3 {

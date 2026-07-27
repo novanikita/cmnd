@@ -327,6 +327,70 @@ a.projects-more-btn:focus-visible {
   object-fit: cover;
 }
 
+.menu-mvp {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5em;
+  align-items: stretch;
+}
+
+.projects-grid.menu-grid[hidden] {
+  display: none !important;
+}
+
+.menu-mvp__card {
+  box-sizing: border-box;
+  min-width: 0;
+  height: 16em;
+  padding: 1.4em 1.5em;
+  border-radius: 1.5em;
+  background-color: var(--color-blue-10);
+  color: var(--color-blue);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.menu-mvp__card:hover {
+  background-color: rgba(255, 105, 0, 0.1);
+  color: var(--color-orange);
+  transition: background-color 0s, color 0s;
+}
+
+.ids .menu-mvp__title {
+  margin: 0;
+  font-size: 1.65em;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.ids .menu-mvp__list {
+  margin: 0.7em 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.ids .menu-mvp__list li {
+  margin: 0;
+  font-size: 1.2em;
+  line-height: 1.3;
+  font-weight: 400;
+  padding-left: 0.85em;
+  position: relative;
+}
+
+.ids .menu-mvp__list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 400;
+  font-size: 1.15em;
+  line-height: 1.3;
+}
+
+.ids .menu-mvp__list li + li {
+  margin-top: 0.15em;
+}
+
 .process-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -508,6 +572,29 @@ a.projects-more-btn:focus-visible {
     font-size: 1.5em;
   }
 
+  .menu-mvp {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4em;
+  }
+
+  .menu-mvp__card {
+    height: 14.5em;
+    padding: 1.2em 1.3em;
+    border-radius: 1.2em;
+  }
+
+  .ids .menu-mvp__title {
+    font-size: 1.35em;
+  }
+
+  .ids .menu-mvp__list {
+    margin-top: 0.55em;
+  }
+
+  .ids .menu-mvp__list li {
+    font-size: 1.1em;
+  }
+
   .projects-grid {
     column-gap: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -619,4 +706,20 @@ a.projects-more-btn:focus-visible {
     padding: 1.2em 0.9em;
     font-size: 1.2em;
   }
+}
+
+html[data-lang="en"] .ids .team-meta .project-tag-chip {
+  font-size: 0.72em;
+}
+
+html[data-lang="en"] .ids .team-grid--extended p.team-bio {
+  hyphens: auto;
+}
+
+html[data-lang="en"] .about-how-we-work-cta .main-page-header__cta {
+  white-space: normal;
+}
+
+html[data-lang="en"] .ids .founder-quote__role {
+  font-size: 0.8em;
 }
