@@ -117,7 +117,7 @@
         titleEn: '4 years at Dodo Pizza'
       },
       {
-        href: 'soon.html',
+        href: 'kim-chips.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-soft',
