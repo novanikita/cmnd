@@ -35,7 +35,8 @@ ids-gallery,
 
 .project-gallery--rangos,
 .project-gallery--lavatop,
-.project-gallery--dodo {
+.project-gallery--dodo,
+.project-gallery--kim-chips {
   display: block;
 }
 
@@ -44,7 +45,9 @@ ids-gallery,
 .project-gallery--lavatop ids-gallery,
 .project-gallery--lavatop .ids__gallery,
 .project-gallery--dodo ids-gallery,
-.project-gallery--dodo .ids__gallery {
+.project-gallery--dodo .ids__gallery,
+.project-gallery--kim-chips ids-gallery,
+.project-gallery--kim-chips .ids__gallery {
   display: flex;
 }
 
@@ -53,7 +56,9 @@ ids-gallery,
 .project-gallery--lavatop figure img,
 .project-gallery--lavatop figure video,
 .project-gallery--dodo figure img,
-.project-gallery--dodo figure video {
+.project-gallery--dodo figure video,
+.project-gallery--kim-chips figure img,
+.project-gallery--kim-chips figure video {
   width: 100%;
   display: block;
 }

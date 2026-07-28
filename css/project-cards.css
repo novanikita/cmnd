@@ -447,7 +447,7 @@ a.projects-more-btn:focus-visible {
 }
 
 .ids .team-grid--extended p.team-bio {
-  font-size: 0.7em;
+  font-size: 0.8em;
   padding-right: 0.5em;
 }
 
@@ -480,11 +480,10 @@ a.projects-more-btn:focus-visible {
 
 .team-meta {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   column-gap: 0.4em;
-  row-gap: 0.25em;
+  row-gap: 0;
   margin-top: 0.75em;
   font-size: 1.2em;
   line-height: 1.12;
@@ -625,6 +624,9 @@ a.projects-more-btn:focus-visible {
   }
 
   .team-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0.25em;
     font-size: 1.05em;
   }
 
