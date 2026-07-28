@@ -47,6 +47,18 @@
   transition: transform 0.2s ease;
 }
 
+.ids :is(p, ul):has(+ .ids__space + .about-how-we-work-cta) {
+  margin-bottom: 0;
+}
+
+.ids ul:has(+ .ids__space + .about-how-we-work-cta) > li:last-child {
+  margin-bottom: 0;
+}
+
+.ids p.about-how-we-work-cta {
+  margin-bottom: 0;
+}
+
 .about-how-we-work-cta .main-page-header__cta:hover .project-anchor-arrow,
 .about-how-we-work-cta .main-page-header__cta:focus-visible .project-anchor-arrow {
   transform: translateX(0.1em);

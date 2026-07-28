@@ -69,6 +69,17 @@ ids-gallery,
 }
 
 @media screen and (max-width: 768px) {
+  /* Text → image spacing in cases → S; after image stays L */
+  .ids__wrapper:has(+ .ids__wrapper .project-gallery) > .ids__space.L:last-child,
+  .ids__wrapper:has(+ .ids__wrapper .project-gallery) > .ids__space.M:last-child {
+    height: calc(var(--ids__density) * 0.7em);
+  }
+
+  /* Keep M after audit CTA */
+  .ids__wrapper:has(+ .ids__wrapper .project-gallery) > .about-how-we-work-cta + .ids__space.M {
+    height: calc(var(--ids__density) * 1.4em);
+  }
+
   .project-gallery--dodo ids-gallery figure.XL,
   .project-gallery--dodo .ids__gallery figure.XL {
     border-radius: 0.4em;
