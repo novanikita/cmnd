@@ -279,20 +279,21 @@ main {
   }
 
   .quote-tooltip--aside {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
+    position: absolute;
+    left: 50%;
+    right: auto;
+    width: calc(100% - 4em);
     max-width: none;
     z-index: 1300;
-    border-radius: 0;
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s ease;
+    border-radius: 1em;
+    transform: translateX(-50%);
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
   }
 
   .quote-tooltip--aside.is-visible {
-    transition: opacity 0s linear, visibility 0s linear, transform 0s linear;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: opacity 0s linear, visibility 0s linear;
   }
 
   .quote-tooltip--aside .quote-tooltip__text,
@@ -300,7 +301,7 @@ main {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 1.6em;
+    padding: 1em;
   }
 
   .ids h3 {

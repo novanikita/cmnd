@@ -447,7 +447,7 @@ a.projects-more-btn:focus-visible {
 }
 
 .ids .team-grid--extended p.team-bio {
-  font-size: 0.8em;
+  font-size: 0.7em;
   padding-right: 0.5em;
 }
 
@@ -480,10 +480,11 @@ a.projects-more-btn:focus-visible {
 
 .team-meta {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   flex-wrap: wrap;
   column-gap: 0.4em;
-  row-gap: 0;
+  row-gap: 0.25em;
   margin-top: 0.75em;
   font-size: 1.2em;
   line-height: 1.12;
@@ -538,6 +539,11 @@ a.projects-more-btn:focus-visible {
 }
 
 @media screen and (max-width: 768px) {
+  body.page-about p.about:not(.about-how-we-work-cta),
+  body.page-about .founder-quote .about:not(.about-how-we-work-cta) {
+    font-size: 1.1em;
+  }
+
   .founder-quotes {
     grid-template-columns: 1fr;
     row-gap: 3em;
@@ -627,7 +633,7 @@ a.projects-more-btn:focus-visible {
   }
 
   .ids .team-grid--extended p.team-bio {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
 
   .ids p.team-bio {

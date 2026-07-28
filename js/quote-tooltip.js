@@ -130,8 +130,20 @@
       tooltip.style.left = '';
       tooltip.style.top = top + 'px';
     } else if (placeAside && isMobile) {
+      // Absolute plaque centered in the quote block, nudged up so the trigger stays visible.
+      var mobileBlock =
+        wordEl.closest('.founder-quote') ||
+        wordEl.closest('.quote-words-root') ||
+        wordEl;
+      var mobileBlockRect = mobileBlock.getBoundingClientRect();
+      var tooltipHeight = tooltip.offsetHeight || 0;
+      var nudgeUp = (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) * 1.5;
+      top =
+        mobileBlockRect.top -
+        containerRect.top +
+        Math.max(0, (mobileBlockRect.height - tooltipHeight) / 2 - nudgeUp);
       tooltip.style.left = '';
-      tooltip.style.top = '';
+      tooltip.style.top = top + 'px';
     } else {
       top = wordRect.bottom - containerRect.top + gapPx;
       left = wordRect.left - containerRect.left;
@@ -188,7 +200,12 @@
     var target = event.target && event.target.nodeType === 3 ? event.target.parentElement : event.target;
     var clickedWord = target && target.closest && target.closest('.quote-word');
     var clickedTooltip = target && target.closest && target.closest('.quote-tooltip');
-    if (clickedWord || clickedTooltip) return;
+    if (clickedWord) return;
+    if (clickedTooltip) {
+      suppressHideUntil = 0;
+      hideTooltip();
+      return;
+    }
     hideTooltip();
   });
 

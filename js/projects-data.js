@@ -122,9 +122,7 @@
         coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-soft',
         titleRu: 'Ким чипсы',
-        titleEn: 'Kim Chips',
-        badgeRu: 'в работе',
-        badgeEn: 'in progress'
+        titleEn: 'Kim Chips'
       },
       {
         href: 'soon.html',
