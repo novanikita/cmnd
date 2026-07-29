@@ -63,12 +63,25 @@ ids-gallery,
   display: block;
 }
 
+/* Kim Chips: while case text is hidden, stack galleries like Lavatop (gallery --gap) */
+.ids__wrapper.S:has(> [hidden][aria-hidden="true"]):not([data-client-tag]) {
+  display: none;
+}
+
+.ids__wrapper.S:has(> [hidden][aria-hidden="true"]):not([data-client-tag]) + .ids__wrapper.L:has(.project-gallery--kim-chips) {
+  margin-top: 1em;
+}
+
 .project-gallery--dodo ids-gallery figure.L.project-figure--soft-radius,
 .project-gallery--dodo .ids__gallery figure.L.project-figure--soft-radius {
   border-radius: 0.6em;
 }
 
 @media screen and (max-width: 768px) {
+  .ids__wrapper.S:has(> [hidden][aria-hidden="true"]):not([data-client-tag]) + .ids__wrapper.L:has(.project-gallery--kim-chips) {
+    margin-top: 0.4em;
+  }
+
   /* Text → image spacing in cases → S; after image stays L */
   .ids__wrapper:has(+ .ids__wrapper .project-gallery) > .ids__space.L:last-child,
   .ids__wrapper:has(+ .ids__wrapper .project-gallery) > .ids__space.M:last-child {

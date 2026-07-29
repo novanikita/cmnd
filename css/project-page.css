@@ -135,13 +135,17 @@ main {
 }
 
 .quote-tooltip--aside {
-  left: 15em;
-  max-width: calc(50% - 2em);
+  left: 6em;
+  width: 50%;
+  max-width: 50%;
+  box-sizing: border-box;
 }
 
+.quote-tooltip--aside .quote-tooltip__text,
 .quote-tooltip--aside.quote-tooltip--wide .quote-tooltip__text {
-  width: 31em;
-  max-width: min(31em, 90vw);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 1.6em;
 }
 
