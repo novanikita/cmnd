@@ -345,12 +345,12 @@ main {
   }
 
   .project-tag-row {
-    gap: 0.3em;
+    gap: 0.35em;
   }
 
   .project-tag-chip {
-    font-size: 0.6em;
-    line-height: 1;
-    padding: 0.05em 0.45em;
+    font-size: 0.9em;
+    line-height: 1.15;
+    padding: 0.1em 0.55em;
   }
 }
