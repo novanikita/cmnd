@@ -78,6 +78,7 @@
     apply();
 
     document.addEventListener('site:header-ready', apply);
+    document.addEventListener('site:footer-ready', apply);
     document.addEventListener('site:projects-rendered', apply);
     document.addEventListener('site:lang-changed', apply);
     document.addEventListener('click', function (e) {

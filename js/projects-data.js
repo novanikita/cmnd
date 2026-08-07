@@ -5,7 +5,7 @@
     index: [
       {
         itemClass: 'L',
-        href: 'yandex.html',
+        href: '/yandex',
         coverImages:
           'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         promoClass: 'project-promo-soft',
@@ -13,16 +13,15 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: 'lavatop.html',
-        typeTags: 'website',
-        coverImages:
-          'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
+        href: '/kim-chips',
+        typeTags: 'branding',
+        coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-hard',
-        titleRu: 'Lavatop',
-        titleEn: 'Lavatop'
+        titleRu: 'Ким чипсы',
+        titleEn: 'Kim Chips'
       },
       {
-        href: 'rangos.html',
+        href: '/rangos',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
@@ -31,17 +30,16 @@
         titleEn: 'Rangos'
       },
       {
-        href: 'sber500.html',
-        id: 'sber500',
-        typeTags: 'events',
+        href: '/lavatop',
+        typeTags: 'website',
         coverImages:
-          'images/projects-cover/sber500-cover-1.avif|images/projects-cover/sber500-cover-2.avif|images/projects-cover/sber500-cover-3.avif|images/projects-cover/sber500-cover-4.avif',
+          'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
         promoClass: 'project-promo-hard',
-        titleRu: 'Sber500',
-        titleEn: 'Sber500'
+        titleRu: 'Lavatop',
+        titleEn: 'Lavatop'
       },
       {
-        href: 'sporos.html',
+        href: '/sporos',
         id: 'sporos',
         typeTags: 'branding',
         coverImages:
@@ -53,7 +51,7 @@
       {
         id: 'dodo',
         itemClass: 'L',
-        href: 'dodo.html',
+        href: '/dodo',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/dodo-cover-1.avif|images/projects-cover/dodo-cover-2.avif|images/projects-cover/dodo-cover-3.avif|images/projects-cover/dodo-cover-4.avif|images/projects-cover/dodo-cover-5.avif',
@@ -64,7 +62,7 @@
     portfolio: [
       {
         itemClass: 'L',
-        href: 'yandex.html',
+        href: '/yandex',
         coverImages:
           'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         promoClass: 'project-promo-soft',
@@ -72,16 +70,15 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: 'lavatop.html',
-        typeTags: 'website',
-        coverImages:
-          'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
+        href: '/kim-chips',
+        typeTags: 'branding',
+        coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-hard',
-        titleRu: 'Lavatop',
-        titleEn: 'Lavatop'
+        titleRu: 'Ким чипсы',
+        titleEn: 'Kim Chips'
       },
       {
-        href: 'rangos.html',
+        href: '/rangos',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
@@ -90,16 +87,16 @@
         titleEn: 'Rangos'
       },
       {
-        href: 'sber500.html',
-        typeTags: 'events',
+        href: '/lavatop',
+        typeTags: 'website',
         coverImages:
-          'images/projects-cover/sber500-cover-1.avif|images/projects-cover/sber500-cover-2.avif|images/projects-cover/sber500-cover-3.avif|images/projects-cover/sber500-cover-4.avif',
+          'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
         promoClass: 'project-promo-hard',
-        titleRu: 'Sber500',
-        titleEn: 'Sber500'
+        titleRu: 'Lavatop',
+        titleEn: 'Lavatop'
       },
       {
-        href: 'sporos.html',
+        href: '/sporos',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/sporos-cover-1.avif|images/projects-cover/sporos-cover-2.avif|images/projects-cover/sporos-cover-3.avif',
@@ -109,7 +106,7 @@
       },
       {
         itemClass: 'L',
-        href: 'dodo.html',
+        href: '/dodo',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/dodo-cover-1.avif|images/projects-cover/dodo-cover-2.avif|images/projects-cover/dodo-cover-3.avif|images/projects-cover/dodo-cover-4.avif|images/projects-cover/dodo-cover-5.avif',
@@ -117,15 +114,16 @@
         titleEn: '4 years at Dodo Pizza'
       },
       {
-        href: 'kim-chips.html',
-        typeTags: 'branding',
-        coverImages: 'images/projects-cover/kim-chips-cover.avif',
+        href: '/sber500',
+        typeTags: 'events',
+        coverImages:
+          'images/projects-cover/sber500-cover-1.avif|images/projects-cover/sber500-cover-2.avif|images/projects-cover/sber500-cover-3.avif|images/projects-cover/sber500-cover-4.avif',
         promoClass: 'project-promo-soft',
-        titleRu: 'Ким чипсы',
-        titleEn: 'Kim Chips'
+        titleRu: 'Sber500',
+        titleEn: 'Sber500'
       },
       {
-        href: 'soon.html',
+        href: '/soon',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/toolpar-cover.avif',
         promoClass: 'project-promo-hard',

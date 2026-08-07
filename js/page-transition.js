@@ -37,6 +37,14 @@
       && CSS.supports('view-transition-name', 'root');
   }
 
+  function clearTransitionClasses() {
+    document.documentElement.classList.remove(
+      'is-page-enter-prep',
+      'is-page-entering',
+      'is-page-leaving'
+    );
+  }
+
   function runEnterAnimation() {
     if (prefersReducedMotion || !document.documentElement.classList.contains('is-page-enter-prep')) return;
 
@@ -80,6 +88,18 @@
     event.preventDefault();
     leaveAndNavigate(url.href);
   }
+
+  // Back/forward often restores the page from bfcache with is-page-leaving
+  // still applied (body opacity: 0), and scripts do not re-run.
+  window.addEventListener('pagehide', function () {
+    document.documentElement.classList.remove('is-page-leaving');
+  });
+
+  window.addEventListener('pageshow', function (event) {
+    if (!event.persisted) return;
+    sessionStorage.removeItem(STORAGE_KEY);
+    clearTransitionClasses();
+  });
 
   document.addEventListener('click', onDocumentClick, true);
 

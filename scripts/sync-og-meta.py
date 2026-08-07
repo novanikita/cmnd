@@ -272,7 +272,7 @@ def absolute_url(path: str) -> str:
 def page_canonical(path: pathlib.Path) -> str:
     if path.name == "index.html":
         return f"{SITE_ORIGIN}/"
-    return f"{SITE_ORIGIN}/{path.name}"
+    return f"{SITE_ORIGIN}/{path.stem}"
 
 
 def attr_escape(value: str) -> str:

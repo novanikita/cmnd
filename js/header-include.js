@@ -8,7 +8,7 @@
   var FALLBACK =
     '<header class="main-header">' +
     '<div class="main-header__left">' +
-    '<div class="logo"><a href="index.html" aria-label="flowerdog"><img src="images/icon/logo.svg" alt="flowerdog" class="main-header__logo-image" draggable="false"></a></div>' +
+    '<div class="logo"><a href="/" aria-label="flowerdog"><img src="images/icon/logo.svg" alt="flowerdog" class="main-header__logo-image" draggable="false"></a></div>' +
     '</div>' +
     '<div class="main-header__right">' +
     '<button type="button" class="main-header__menu-toggle" aria-label="Open menu" aria-expanded="false">' +
@@ -16,8 +16,8 @@
     '<span class="main-header__menu-line"></span>' +
     '</button>' +
     '<nav class="main-header__nav">' +
-    '<a class="main-header__link" data-i18n data-key="nav.about" data-ru="О нас" data-en="About" href="about.html">О нас</a>' +
-    '<a class="main-header__link" data-i18n data-key="nav.projects" data-ru="Проекты" data-en="Projects" href="portfolio.html">Проекты</a>' +
+    '<a class="main-header__link" data-i18n data-key="nav.about" data-ru="О нас" data-en="About" href="/about">О нас</a>' +
+    '<a class="main-header__link" data-i18n data-key="nav.projects" data-ru="Проекты" data-en="Projects" href="/portfolio">Проекты</a>' +
     '<div class="lang-switcher" aria-label="Language switcher" role="group">' +
     '<button type="button" class="lang-switcher__btn is-active" data-lang-switch="ru" aria-pressed="true">РУ</button>' +
     '<button type="button" class="lang-switcher__btn" data-lang-switch="en" aria-pressed="false">EN</button>' +

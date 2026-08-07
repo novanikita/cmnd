@@ -58,6 +58,10 @@
       applyLang(getSavedLang());
     });
 
+    document.addEventListener('site:footer-ready', function () {
+      applyLang(getSavedLang());
+    });
+
     document.addEventListener('site:projects-rendered', function () {
       applyLang(getSavedLang());
     });

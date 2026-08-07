@@ -13,7 +13,7 @@ footer {
   padding: 0 1em calc(0.75em + env(safe-area-inset-bottom, 0px));
 }
 
-.ids footer h1 {
+.ids footer .footer-brand {
   width: 100%;
   max-width: 100%;
   margin: 0;
@@ -21,6 +21,25 @@ footer {
   line-height: 0.9;
   white-space: nowrap;
   font-weight: 700;
+}
+
+.footer-contact {
+  margin: 0;
+}
+
+.footer-contact h1 {
+  margin: 0;
+  white-space: normal;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-contact.main-page-text-fixed {
+    margin-bottom: 0;
+  }
+
+  .footer-contact h1:last-child {
+    margin-top: 0;
+  }
 }
 
 .footer-brand {

@@ -31,7 +31,7 @@
     var link = document.createElement('a');
     link.className = 'project-promo-link';
     var linkPrefix = window.SITE_PROJECT_LINK_PREFIX || '';
-    link.href = linkPrefix + (project.href || 'soon.html');
+    link.href = linkPrefix + (project.href || '/soon');
     if (project.coverImages) link.setAttribute('data-cover-images', project.coverImages);
 
     var promo = document.createElement('div');
@@ -86,7 +86,7 @@
     if (pageKey === 'index') {
       var more = document.createElement('a');
       more.className = 'projects-more-btn';
-      more.href = 'portfolio.html';
+      more.href = '/portfolio';
       more.setAttribute('data-i18n', '');
       more.setAttribute('data-ru', 'Ещё проекты');
       more.setAttribute('data-en', 'More projects');
