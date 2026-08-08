@@ -7,6 +7,16 @@
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function isGalleryMediaLink(link) {
+    if (!link) return false;
+    if (link.closest('ids-gallery, .ids__gallery, .project-gallery')) return true;
+
+    var href = link.getAttribute('href');
+    if (!href) return false;
+
+    return /\.(avif|webp|jpe?g|png|gif|svg|mp4|webm|mov)(\?|#|$)/i.test(href);
+  }
+
   function isInternalLink(link) {
     if (!link || link.tagName !== 'A') return false;
     if (link.hasAttribute('download')) return false;
@@ -79,6 +89,7 @@
 
     var link = event.target.closest('a');
     if (!isInternalLink(link)) return;
+    if (isGalleryMediaLink(link)) return;
 
     var url = new URL(link.href, window.location.href);
     if (isSameDocumentNavigation(url) && url.hash) return;

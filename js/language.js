@@ -23,7 +23,12 @@
       var dictionary = window.SiteDictionary && window.SiteDictionary.i18n;
       var fromDictionary = key && dictionary && dictionary[key] ? dictionary[key][lang] : null;
       var text = fromDictionary != null ? fromDictionary : el.getAttribute('data-' + lang);
-      if (text != null) el.textContent = text;
+      if (text == null) return;
+      if (el.tagName === 'META') {
+        el.setAttribute('content', text);
+      } else {
+        el.textContent = text;
+      }
     });
 
     document.querySelectorAll('.tag[data-tag-en], .tag[data-tag-ru]').forEach(function (el) {

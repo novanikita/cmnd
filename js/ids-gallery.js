@@ -8,7 +8,7 @@ class IdsGallery extends HTMLElement {
     this.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
-      });
+      }, true);
       link.style.cursor = 'default';
       if (!link.hasAttribute('aria-label')) {
         link.setAttribute('aria-label', 'Gallery media');

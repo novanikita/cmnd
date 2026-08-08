@@ -3,6 +3,9 @@
 
 GitHub Pages serves directory indexes natively. Relative asset paths break in
 subfolders, so each moved page gets <base href="/"> in production only.
+
+Source files keep *.html links for local Live Server; this script rewrites them
+to clean /slug paths in the production artifact only.
 """
 
 from __future__ import annotations
@@ -39,21 +42,31 @@ def inject_base_href(html: str) -> str:
     return html.replace(CHARSET, CHARSET + "\n" + BASE_TAG, 1)
 
 
-def rewrite_legacy_urls(html: str, slug: str) -> str:
-    """Point canonical/og links and in-page .html refs at the clean URL."""
-    html = html.replace(f"{SITE_ORIGIN}/{slug}.html", f"{SITE_ORIGIN}/{slug}")
-    html = html.replace(f'href="{slug}.html"', f'href="/{slug}"')
-    html = html.replace(f"href='{slug}.html'", f"href='/{slug}'")
-    return html
+def rewrite_page_links(text: str, slugs: list[str]) -> str:
+    """Turn internal page links into clean /slug paths (production only)."""
+    for slug in sorted(slugs, key=len, reverse=True):
+        target = f"/{slug}"
+        text = text.replace(f"{SITE_ORIGIN}/{slug}.html", f"{SITE_ORIGIN}/{slug}")
+        replacements = (
+            (f'href="{slug}.html"', f'href="{target}"'),
+            (f"href='{slug}.html'", f"href='{target}'"),
+            (f'href="/{slug}.html"', f'href="{target}"'),
+            (f"href='/{slug}.html'", f"href='{target}'"),
+            (f"href: '{slug}.html'", f"href: '{target}'"),
+            (f'href: "{slug}.html"', f'href: "{target}"'),
+        )
+        for old, new in replacements:
+            text = text.replace(old, new)
+    return text
 
 
-def transform_page(site_dir: pathlib.Path, html_path: pathlib.Path) -> None:
+def transform_page(site_dir: pathlib.Path, html_path: pathlib.Path, slugs: list[str]) -> None:
     slug = html_path.stem
     target = f"/{slug}"
     canonical = f"{SITE_ORIGIN}{target}"
 
     content = html_path.read_text(encoding="utf-8")
-    content = rewrite_legacy_urls(content, slug)
+    content = rewrite_page_links(content, slugs)
     content = inject_base_href(content)
 
     dest_dir = site_dir / slug
@@ -66,6 +79,26 @@ def transform_page(site_dir: pathlib.Path, html_path: pathlib.Path) -> None:
     )
 
 
+def rewrite_site_artifacts(site_dir: pathlib.Path, slugs: list[str]) -> None:
+    """Rewrite links in HTML/JS that stay at fixed paths after directory move."""
+    paths: list[pathlib.Path] = [site_dir / "index.html"]
+    paths.extend(site_dir.glob("*/index.html"))
+    for rel in (
+        "partials/header.html",
+        "js/projects-data.js",
+        "js/header-include.js",
+    ):
+        path = site_dir / rel
+        if path.is_file():
+            paths.append(path)
+
+    for path in paths:
+        original = path.read_text(encoding="utf-8")
+        updated = rewrite_page_links(original, slugs)
+        if updated != original:
+            path.write_text(updated, encoding="utf-8")
+
+
 def main() -> int:
     site_dir = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "_site")
     if not site_dir.is_dir():
@@ -73,9 +106,13 @@ def main() -> int:
         return 1
 
     pages = sorted(p for p in site_dir.glob("*.html") if p.name not in KEEP_FLAT)
+    slugs = [p.stem for p in pages]
+
     for html_path in pages:
-        transform_page(site_dir, html_path)
+        transform_page(site_dir, html_path, slugs)
         print(f"  /{html_path.stem}/  ←  {html_path.name} (+ redirect stub)")
+
+    rewrite_site_artifacts(site_dir, slugs)
 
     print(f"Clean URLs ready for {len(pages)} pages.")
     return 0

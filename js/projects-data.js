@@ -5,7 +5,7 @@
     index: [
       {
         itemClass: 'L',
-        href: '/yandex',
+        href: 'yandex.html',
         coverImages:
           'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         promoClass: 'project-promo-soft',
@@ -13,7 +13,7 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: '/kim-chips',
+        href: 'kim-chips.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-hard',
@@ -21,7 +21,7 @@
         titleEn: 'Kim Chips'
       },
       {
-        href: '/rangos',
+        href: 'rangos.html',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
@@ -30,7 +30,7 @@
         titleEn: 'Rangos'
       },
       {
-        href: '/lavatop',
+        href: 'lavatop.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
@@ -39,7 +39,7 @@
         titleEn: 'Lavatop'
       },
       {
-        href: '/sporos',
+        href: 'sporos.html',
         id: 'sporos',
         typeTags: 'branding',
         coverImages:
@@ -51,7 +51,7 @@
       {
         id: 'dodo',
         itemClass: 'L',
-        href: '/dodo',
+        href: 'dodo.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/dodo-cover-1.avif|images/projects-cover/dodo-cover-2.avif|images/projects-cover/dodo-cover-3.avif|images/projects-cover/dodo-cover-4.avif|images/projects-cover/dodo-cover-5.avif',
@@ -62,7 +62,7 @@
     portfolio: [
       {
         itemClass: 'L',
-        href: '/yandex',
+        href: 'yandex.html',
         coverImages:
           'images/projects-cover/yandex-cover-1.avif|images/projects-cover/yandex-cover-2.avif|images/projects-cover/yandex-cover-3.avif|images/projects-cover/yandex-cover-4.avif|images/projects-cover/yandex-cover-5.avif|images/projects-cover/yandex-cover-6.avif',
         promoClass: 'project-promo-soft',
@@ -70,7 +70,7 @@
         titleEn: '117 projects for Yandex'
       },
       {
-        href: '/kim-chips',
+        href: 'kim-chips.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/kim-chips-cover.avif',
         promoClass: 'project-promo-hard',
@@ -78,7 +78,7 @@
         titleEn: 'Kim Chips'
       },
       {
-        href: '/rangos',
+        href: 'rangos.html',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/rangos-cover-1.avif|images/projects-cover/rangos-cover-2.avif|images/projects-cover/rangos-cover-3.avif|images/projects-cover/rangos-cover-4.avif',
@@ -87,7 +87,7 @@
         titleEn: 'Rangos'
       },
       {
-        href: '/lavatop',
+        href: 'lavatop.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
@@ -96,7 +96,7 @@
         titleEn: 'Lavatop'
       },
       {
-        href: '/sporos',
+        href: 'sporos.html',
         typeTags: 'branding',
         coverImages:
           'images/projects-cover/sporos-cover-1.avif|images/projects-cover/sporos-cover-2.avif|images/projects-cover/sporos-cover-3.avif',
@@ -106,7 +106,7 @@
       },
       {
         itemClass: 'L',
-        href: '/dodo',
+        href: 'dodo.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/dodo-cover-1.avif|images/projects-cover/dodo-cover-2.avif|images/projects-cover/dodo-cover-3.avif|images/projects-cover/dodo-cover-4.avif|images/projects-cover/dodo-cover-5.avif',
@@ -114,7 +114,7 @@
         titleEn: '4 years at Dodo Pizza'
       },
       {
-        href: '/sber500',
+        href: 'sber500.html',
         typeTags: 'events',
         coverImages:
           'images/projects-cover/sber500-cover-1.avif|images/projects-cover/sber500-cover-2.avif|images/projects-cover/sber500-cover-3.avif|images/projects-cover/sber500-cover-4.avif',
@@ -123,7 +123,7 @@
         titleEn: 'Sber500'
       },
       {
-        href: '/soon',
+        href: 'soon.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/toolpar-cover.avif',
         promoClass: 'project-promo-hard',
