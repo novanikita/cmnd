@@ -74,10 +74,43 @@
     upsertSoundToggle(video);
   });
 
+  function ensureVideoLoading(video) {
+    if (!video || video.readyState > 0) return;
+    video.preload = 'auto';
+    video.load();
+  }
+
   function playVideo(video) {
+    ensureVideoLoading(video);
+
+    if (video.readyState < 2) {
+      if (video.__awaitingPlay) return;
+      video.__awaitingPlay = true;
+      video.addEventListener(
+        'canplay',
+        function () {
+          video.__awaitingPlay = false;
+          playVideo(video);
+        },
+        { once: true }
+      );
+      return;
+    }
+
     var promise = video.play();
     if (promise && typeof promise.catch === 'function') {
-      promise.catch(function () {});
+      promise.catch(function () {
+        if (video.__awaitingPlay) return;
+        video.__awaitingPlay = true;
+        video.addEventListener(
+          'canplay',
+          function () {
+            video.__awaitingPlay = false;
+            playVideo(video);
+          },
+          { once: true }
+        );
+      });
     }
   }
 
@@ -91,6 +124,19 @@
   }
 
   videos.forEach(pauseVideo);
+
+  var preloadObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        ensureVideoLoading(entry.target);
+        preloadObserver.unobserve(entry.target);
+      });
+    },
+    {
+      rootMargin: '500px 0px'
+    }
+  );
 
   var observer = new IntersectionObserver(
     function (entries) {
@@ -109,6 +155,7 @@
   );
 
   videos.forEach(function (video) {
+    preloadObserver.observe(video);
     observer.observe(video);
   });
 })();

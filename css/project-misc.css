@@ -248,6 +248,11 @@ hr.default {
     vertical-align: baseline;
   }
 
+  .project-team__label {
+    display: block;
+    margin-bottom: 0.35em;
+  }
+
   .portreit {
     width: 1.3em;
     height: 1.3em;

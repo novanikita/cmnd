@@ -15,7 +15,8 @@
       {
         href: 'kim-chips.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/kim-chips-cover.avif',
+        coverImages:
+          'images/projects-cover/kim-chips-cover.avif|images/projects-cover/kim-chips-cover-2.avif|images/projects-cover/kim-chips-cover-3.avif|images/projects-cover/kim-chips-cover-4.avif',
         promoClass: 'project-promo-hard',
         titleRu: 'Ким чипсы',
         titleEn: 'Kim Chips'
@@ -72,7 +73,8 @@
       {
         href: 'kim-chips.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/kim-chips-cover.avif',
+        coverImages:
+          'images/projects-cover/kim-chips-cover.avif|images/projects-cover/kim-chips-cover-2.avif|images/projects-cover/kim-chips-cover-3.avif|images/projects-cover/kim-chips-cover-4.avif',
         promoClass: 'project-promo-hard',
         titleRu: 'Ким чипсы',
         titleEn: 'Kim Chips'

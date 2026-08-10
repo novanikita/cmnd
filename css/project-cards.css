@@ -661,18 +661,6 @@ a.projects-more-btn:focus-visible {
     grid-column: span 2;
   }
 
-  .projects-grid[data-projects-page="index"] .projects-grid-item[data-project-id="dodo"] {
-    order: 4;
-  }
-
-  .projects-grid[data-projects-page="index"] .projects-grid-item[data-project-id="sber500"] {
-    order: 5;
-  }
-
-  .projects-grid[data-projects-page="index"] .projects-grid-item[data-project-id="sporos"] {
-    order: 6;
-  }
-
   .projects-grid[data-projects-page="index"] > a.projects-more-btn {
     order: 999;
   }
