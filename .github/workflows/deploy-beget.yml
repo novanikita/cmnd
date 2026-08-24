@@ -30,11 +30,12 @@ jobs:
             exit 1
           fi
           mkdir -p ~/.ssh
-          printf '%s\n' "$BEGET_SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s' "$BEGET_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$BEGET_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keygen -y -f ~/.ssh/id_ed25519 > /dev/null
 
-      - name: Rsync to Beget
+      - name: Verify Beget path
         env:
           BEGET_HOST: ${{ secrets.BEGET_HOST }}
           BEGET_USER: ${{ secrets.BEGET_USER }}
@@ -44,6 +45,24 @@ jobs:
             echo "::error::Add GitHub secrets: BEGET_USER and BEGET_PATH"
             exit 1
           fi
+          case "$BEGET_PATH" in
+            */) ;;
+            *) echo "::error::BEGET_PATH must end with / (example: /home/u/login/flowerdog.studio/public_html/)"; exit 1 ;;
+          esac
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o BatchMode=yes \
+            "${BEGET_USER}@${BEGET_HOST}" \
+            "test -d '${BEGET_PATH}' && echo 'Remote path OK:' && ls -la '${BEGET_PATH}' | head -5" \
+            || {
+              echo "::error::Cannot access BEGET_PATH on Beget. SSH in and run: cd ~/flowerdog.studio/public_html && pwd"
+              exit 1
+            }
+
+      - name: Rsync to Beget
+        env:
+          BEGET_HOST: ${{ secrets.BEGET_HOST }}
+          BEGET_USER: ${{ secrets.BEGET_USER }}
+          BEGET_PATH: ${{ secrets.BEGET_PATH }}
+        run: |
           rsync -az --delete --info=stats2 \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
             _site/ "${BEGET_USER}@${BEGET_HOST}:${BEGET_PATH}"
