@@ -62,7 +62,7 @@ def rewrite_page_links(text: str, slugs: list[str]) -> str:
 
 def transform_page(site_dir: pathlib.Path, html_path: pathlib.Path, slugs: list[str]) -> None:
     slug = html_path.stem
-    target = f"/{slug}"
+    target = f"/{slug}/"
     canonical = f"{SITE_ORIGIN}{target}"
 
     content = html_path.read_text(encoding="utf-8")

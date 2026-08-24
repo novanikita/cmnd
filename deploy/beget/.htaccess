@@ -7,11 +7,11 @@ DirectoryIndex index.html
   RewriteEngine On
   RewriteBase /
 
-  # /about → /about/ when folder exists
+  # /about → serve /about/ internally (no 301 — avoids loop with Beget slash normalization)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !(.*)/$
   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/ -d
-  RewriteRule ^(.*)$ /$1/ [R=301,L]
+  RewriteRule ^(.*)$ /$1/ [L]
 </IfModule>
 
 <IfModule mod_expires.c>
