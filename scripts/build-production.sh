@@ -23,6 +23,7 @@ rsync -a \
   "$ROOT/" "$SITE_DIR/"
 
 cp "$ROOT/robots.production.txt" "$SITE_DIR/robots.txt"
+cp "$ROOT/deploy/beget/.htaccess" "$SITE_DIR/.htaccess"
 
 echo "Building clean URLs (/slug/ + .html redirects)…"
 python3 "$ROOT/scripts/build-clean-urls.py" "$SITE_DIR"

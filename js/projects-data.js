@@ -125,7 +125,7 @@
         titleEn: 'Sber500'
       },
       {
-        href: 'soon.html',
+        href: 'toolpar.html',
         typeTags: 'branding',
         coverImages: 'images/projects-cover/toolpar-cover.avif',
         promoClass: 'project-promo-hard',

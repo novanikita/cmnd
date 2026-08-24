@@ -137,3 +137,96 @@ sudo nginx -t && sudo systemctl reload nginx
 Ветка `main` не получает `noindex`. `robots.txt` на production разрешает обход (`Allow: /`).
 
 `CNAME` с `flowerdog.studio` деплоится только с `main` (в preview-сборке `CNAME` исключён).
+
+---
+
+## Beget (production, доступность из РФ)
+
+Статический сайт можно выложить на **Beget Start** + **Beget Cloud CDN**, сохранив сборку из GitHub Actions.
+
+Workflow: [`.github/workflows/deploy-beget.yml`](../.github/workflows/deploy-beget.yml)  
+Локальный деплой: [`scripts/deploy-beget.sh`](../scripts/deploy-beget.sh)  
+Apache: [`deploy/beget/.htaccess`](beget/.htaccess) (clean URLs `/about/` + кэш статики)
+
+### Схема
+
+```
+main branch  →  build-production.sh  →  _site  →  rsync по SSH  →  Beget public_html
+                                                      ↑
+                                            Beget Cloud CDN  →  flowerdog.studio
+```
+
+GitHub Pages (`deploy.yml`) можно оставить параллельно на время миграции, затем отключить custom domain.
+
+### 1. Аккаунт и сайт в Beget
+
+1. Тариф **Start** (SSH, SSL, ~35 ГБ).
+2. **Домены и поддомены** → привязать `flowerdog.studio` (папка `~/flowerdog.studio/public_html/`).
+3. **SSH-доступ** → включить, сгенерировать ключ:
+
+   ```bash
+   ssh-keygen -t ed25519 -C "flowerdog-deploy" -f ~/.ssh/flowerdog_beget -N ""
+   cat ~/.ssh/flowerdog_beget.pub   # вставить в панель Beget → SSH-ключи
+   ```
+
+4. Проверка:
+
+   ```bash
+   ssh -i ~/.ssh/flowerdog_beget LOGIN@LOGIN.beget.tech
+   ls ~/flowerdog.studio/public_html/
+   ```
+
+   Точный хост и путь смотрите в панели Beget (раздел «SSH» / «Файловый менеджер»).
+
+### 2. GitHub Secrets
+
+**Settings → Secrets and variables → Actions:**
+
+| Secret | Пример |
+|--------|--------|
+| `BEGET_SSH_KEY` | содержимое `~/.ssh/flowerdog_beget` (приватный ключ) |
+| `BEGET_HOST` | `login.beget.tech` |
+| `BEGET_USER` | логин Beget |
+| `BEGET_PATH` | `/home/u/login/flowerdog.studio/public_html/` (со слэшем в конце) |
+
+После push в `main` или ручного **Run workflow** → **Deploy to Beget** сайт зальётся на хостинг.
+
+### 3. SSL
+
+В панели Beget для `flowerdog.studio`: **SSL** → Let's Encrypt (бесплатно).  
+Включить **принудительный HTTPS**.
+
+### 4. Beget Cloud CDN
+
+1. **Облако → CDN** → создать ресурс для `flowerdog.studio`.
+2. Origin — ваш сайт на Beget (IP или домен из панели).
+3. В DNS регистратора: **A/CNAME на CDN**, как указано в панели CDN (не на GitHub Pages).
+
+CDN даёт стабильную отдачу в РФ и за рубежом; без него сайт тоже работает, но только с IP Beget.
+
+### 5. Переключение DNS (когда всё проверено)
+
+Сейчас `flowerdog.studio` указывает на **GitHub Pages**. Перед переключением:
+
+1. Задеплоить на Beget (workflow или `deploy-beget.sh`).
+2. Открыть сайт по временному URL Beget или через `hosts` (IP из панели).
+3. Проверить главную, `/about/`, `/projects/`, кейсы, footer, медиа.
+4. Поменять DNS на Beget / CDN.
+5. Дождаться TTL (до 24 ч), проверить **без VPN** из РФ.
+6. В GitHub Pages убрать custom domain или оставить как резерв.
+
+### 6. Preview на Beget (опционально)
+
+Поддомен `preview.flowerdog.studio` → отдельная папка `~/preview.flowerdog.studio/public_html/` + Basic Auth через `.htaccess` в папке или отдельный workflow с `prepare-preview.sh`.
+
+### Чеклист миграции
+
+- [ ] Аккаунт Beget Start
+- [ ] Домен привязан, SSH работает
+- [ ] Secrets в GitHub
+- [ ] Успешный run **Deploy to Beget**
+- [ ] SSL включён
+- [ ] CDN подключён
+- [ ] DNS переключён
+- [ ] Проверка из РФ без VPN
+- [ ] GitHub Pages отключён (по желанию)

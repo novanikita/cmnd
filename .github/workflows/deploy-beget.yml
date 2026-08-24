@@ -1,0 +1,49 @@
+name: Deploy to Beget
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: beget-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build production artifact
+        run: bash scripts/build-production.sh _site
+
+      - name: Configure SSH
+        env:
+          BEGET_SSH_KEY: ${{ secrets.BEGET_SSH_KEY }}
+          BEGET_HOST: ${{ secrets.BEGET_HOST }}
+        run: |
+          if [ -z "$BEGET_SSH_KEY" ] || [ -z "$BEGET_HOST" ]; then
+            echo "::error::Add GitHub secrets: BEGET_SSH_KEY, BEGET_HOST, BEGET_USER, BEGET_PATH"
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "$BEGET_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$BEGET_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Rsync to Beget
+        env:
+          BEGET_HOST: ${{ secrets.BEGET_HOST }}
+          BEGET_USER: ${{ secrets.BEGET_USER }}
+          BEGET_PATH: ${{ secrets.BEGET_PATH }}
+        run: |
+          if [ -z "$BEGET_USER" ] || [ -z "$BEGET_PATH" ]; then
+            echo "::error::Add GitHub secrets: BEGET_USER and BEGET_PATH"
+            exit 1
+          fi
+          rsync -az --delete --info=stats2 \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
+            _site/ "${BEGET_USER}@${BEGET_HOST}:${BEGET_PATH}"
