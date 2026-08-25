@@ -2,6 +2,7 @@
   'use strict';
 
   var SLIDE_INTERVAL_MS = 150;
+  var AUTO_HIDE_MS = 2000;
   var IMAGE_COUNT = 14;
   var IMAGE_PATH = 'images/footer-animation/footer-';
 
@@ -78,6 +79,8 @@
     var slideshowElapsed = 0;
     var lastTick = null;
     var rafId = null;
+    var wasOpen = false;
+    var hideTimer = null;
 
     function setActiveSlide(index) {
       if (index === slideIndex) return;
@@ -86,11 +89,33 @@
       if (panelImages[slideIndex]) panelImages[slideIndex].classList.add('is-active');
     }
 
+    function clearHideTimer() {
+      if (!hideTimer) return;
+      window.clearTimeout(hideTimer);
+      hideTimer = null;
+    }
+
+    function scheduleHide() {
+      clearHideTimer();
+      hideTimer = window.setTimeout(function () {
+        hideTimer = null;
+        // Rest on the wordmark again so the reveal reads as temporary.
+        stop.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      }, AUTO_HIDE_MS);
+    }
+
     function frame() {
       rafId = null;
 
       var isOpen = window.innerHeight - liftRoot.getBoundingClientRect().bottom > 0.5;
       panel.classList.toggle('is-ready', isOpen);
+
+      if (isOpen && !wasOpen) {
+        scheduleHide();
+      } else if (!isOpen && wasOpen) {
+        clearHideTimer();
+      }
+      wasOpen = isOpen;
 
       if (!isOpen) {
         lastTick = null;
