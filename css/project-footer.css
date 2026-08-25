@@ -18,8 +18,26 @@
   background-color: var(--color-white);
 }
 
-.site-footer-reveal__lift.is-lifted {
-  will-change: transform;
+/* Two resting places at the end of the page: the wordmark, then the reveal. */
+html {
+  scroll-snap-type: y proximity;
+}
+
+.site-footer-reveal__stop {
+  width: 100%;
+  height: 0;
+  scroll-snap-align: end;
+  scroll-snap-stop: always;
+  pointer-events: none;
+}
+
+.site-footer-reveal__spacer {
+  flex: 0 0 auto;
+  width: 100%;
+  height: var(--footer-reveal-height);
+  scroll-snap-align: end;
+  scroll-snap-stop: always;
+  pointer-events: none;
 }
 
 .site-footer-reveal__lift > main {
