@@ -14,10 +14,18 @@ header.is-fixed-on-case {
   left: 0;
   right: 0;
   top: 0;
+  transition: transform 0.28s ease;
 }
 
 header.is-hidden {
-  transform: none;
+  transform: translateY(-110%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header.is-fixed-on-case {
+    transition: none;
+  }
 }
 
 .main-header {

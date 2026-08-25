@@ -31,23 +31,23 @@
         titleEn: 'Rangos'
       },
       {
+        href: 'toolpar.html',
+        id: 'toolpar',
+        typeTags: 'branding',
+        coverImages:
+          'images/projects-cover/toolpar-cover.avif|images/projects-cover/toolpar-cover-2.avif|images/projects-cover/toolpar-cover-3.avif|images/projects-cover/toolpar-cover-4.avif',
+        promoClass: 'project-promo-hard',
+        titleRu: 'Toolpar',
+        titleEn: 'Toolpar'
+      },
+      {
         href: 'lavatop.html',
         typeTags: 'website',
         coverImages:
           'images/projects-cover/lavatop-cover-1.avif|images/projects-cover/lavatop-cover-2.avif|images/projects-cover/lavatop-cover-3.avif',
-        promoClass: 'project-promo-hard',
+        promoClass: 'project-promo-round',
         titleRu: 'Lavatop',
         titleEn: 'Lavatop'
-      },
-      {
-        href: 'sporos.html',
-        id: 'sporos',
-        typeTags: 'branding',
-        coverImages:
-          'images/projects-cover/sporos-cover-1.avif|images/projects-cover/sporos-cover-2.avif|images/projects-cover/sporos-cover-3.avif',
-        promoClass: 'project-promo-round',
-        titleRu: 'Sporos',
-        titleEn: 'Sporos'
       },
       {
         id: 'dodo',
@@ -127,12 +127,11 @@
       {
         href: 'toolpar.html',
         typeTags: 'branding',
-        coverImages: 'images/projects-cover/toolpar-cover.avif',
+        coverImages:
+          'images/projects-cover/toolpar-cover.avif|images/projects-cover/toolpar-cover-2.avif|images/projects-cover/toolpar-cover-3.avif|images/projects-cover/toolpar-cover-4.avif',
         promoClass: 'project-promo-hard',
         titleRu: 'Toolpar',
-        titleEn: 'Toolpar',
-        badgeRu: 'в работе',
-        badgeEn: 'in progress'
+        titleEn: 'Toolpar'
       }
     ]
   };

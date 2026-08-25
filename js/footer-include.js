@@ -29,7 +29,7 @@
     '</div></div>' +
     '<div class="site-footer__brand">' +
     '<img class="site-footer__flower" src="images/icon/flower.svg" width="120" height="88" alt="" aria-hidden="true" draggable="false">' +
-    '<h1 class="site-footer__wordmark">flowerdog</h1>' +
+    '<h1 class="site-footer__wordmark"><img src="images/icon/logo.svg" width="1671" height="352" alt="flowerdog"></h1>' +
     '</div>' +
     '</footer>';
 

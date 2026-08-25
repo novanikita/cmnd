@@ -81,8 +81,11 @@ main {
   flex: 1 0 auto;
 }
 
-[data-site-footer],
-footer {
+.site-footer-reveal__lift {
+  flex: 1 0 auto;
+}
+
+[data-site-footer] {
   margin-top: auto;
 }
 
