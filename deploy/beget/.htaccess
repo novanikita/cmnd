@@ -7,6 +7,10 @@ DirectoryIndex index.html
   RewriteEngine On
   RewriteBase /
 
+  # Draft page is excluded from production — send old links to the stub
+  RewriteRule ^how-we-work/?$ /soon/ [R=302,L]
+  RewriteRule ^how-we-work\.html$ /soon/ [R=302,L]
+
   # /about → serve /about/ internally (no 301 — avoids loop with Beget slash normalization)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !(.*)/$
