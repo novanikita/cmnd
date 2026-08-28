@@ -16,10 +16,40 @@
   z-index: 1;
   width: 100%;
   background-color: var(--color-white);
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.site-footer-reveal__lift.is-lifted {
+.site-footer-reveal__lift.is-open {
+  transform: translate3d(0, calc(-1 * var(--footer-reveal-height)), 0);
+  transition-duration: 0.48s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-footer-reveal__lift.is-closing {
+  transform: translate3d(0, 0, 0);
+  transition-duration: 0.55s;
+  transition-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+html.is-footer-reveal-armed .site-footer-reveal__lift,
+html.is-footer-reveal-open .site-footer-reveal__lift,
+html.is-footer-reveal-closing .site-footer-reveal__lift {
   will-change: transform;
+}
+
+html.is-footer-reveal-armed,
+html.is-footer-reveal-open,
+html.is-footer-reveal-closing {
+  overscroll-behavior-y: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer-reveal__lift,
+  .site-footer-reveal__lift.is-open,
+  .site-footer-reveal__lift.is-closing {
+    transition: none;
+  }
 }
 
 .site-footer-reveal__lift > main {
@@ -36,7 +66,7 @@
   align-items: stretch;
   width: 100%;
   margin: 0;
-  padding: 7em 1em 1em;
+  padding: 7em 1em calc(1em + env(safe-area-inset-bottom, 0px));
   color: var(--color-blue);
 }
 
@@ -181,6 +211,7 @@
   background-color: var(--color-blue-10);
   contain: layout paint;
   pointer-events: none;
+  transition: opacity 0.28s ease;
 }
 
 .site-footer-reveal__panel.is-ready {
@@ -205,13 +236,13 @@
 
 @media screen and (max-width: 768px) {
   :root {
-    /* Match the 1920×600 frame strip so lift distance equals panel height. */
-    --footer-reveal-height: calc(100vw * 600 / 1920);
+    /* Lift distance on mobile — matches the open animation travel. */
+    --footer-reveal-height: 15em;
   }
 
   .site-footer {
     margin: 0;
-    padding: 4em 0.5em 1em;
+    padding: 4em 0.5em calc(0.5em + env(safe-area-inset-bottom, 0px));
   }
 
   .site-footer__top {
@@ -226,7 +257,7 @@
   }
 
   .site-footer__email {
-    font-size: calc(clamp(1.45rem, 7.2vw, 1.95rem) + 0.7em);
+    font-size: 2.3em;
   }
 
   .site-footer__contact-note {
@@ -256,12 +287,16 @@
   }
 
   .site-footer__brand {
-    margin-top: 2.5em;
+    margin-top: 1em;
   }
 
   .site-footer__flower {
     width: 44%;
     margin-left: auto;
     margin-right: 6%;
+  }
+
+  .ids .site-footer__wordmark {
+    margin-bottom: 0;
   }
 }

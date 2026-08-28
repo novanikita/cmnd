@@ -3,16 +3,15 @@
 
   var SLIDE_INTERVAL_MS = 230;
   var AUTO_HIDE_MS = 2000;
-  var RELEASE_DELAY_MS = 140;
-  var RESISTANCE = 380;
-  var EASING_OPEN = 0.18;
-  var EASING_CLOSE = 0.07;
-  var EASING_CLOSE_MOBILE = 0.16;
-  var MOBILE_MAX_WIDTH = 768;
-  var GESTURE_GAP_MS = 110;
-  var THRESHOLD_PX = 50;
+  /* Noise filter only — not a pull-distance threshold. */
+  var INTENT_PX = 10;
+  var REARM_COOLDOWN_MS = 320;
   var IMAGE_COUNT = 14;
   var IMAGE_PATH = 'images/footer-animation/footer-';
+  var IDLE = 'idle';
+  var ARMED = 'armed';
+  var OPEN = 'open';
+  var CLOSING = 'closing';
 
   function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,96 +41,53 @@
     var parent = slot.parentNode;
 
     parent.insertBefore(liftRoot, slot);
-
     if (main) liftRoot.appendChild(main);
     liftRoot.appendChild(footer);
-
     slot.remove();
 
     if (prefersReducedMotion()) return;
 
+    var brand = footer.querySelector('.site-footer__brand') || footer;
+    var wordmark = footer.querySelector('.site-footer__wordmark') || brand;
+
     var panel = document.createElement('div');
     panel.className = 'site-footer-reveal__panel';
     panel.setAttribute('aria-hidden', 'true');
-
-    // Frames must be decoded before the first reveal, otherwise the panel
-    // slides in empty. They are low priority so they don't fight page load.
-    var pending = IMAGE_COUNT;
-    var framesReady = false;
-
-    function onFrameSettled(img) {
-      if (img.dataset.settled === 'true') return;
-      img.dataset.settled = 'true';
-      pending -= 1;
-      if (pending <= 0) framesReady = true;
-    }
-
-    buildImageList().forEach(function (src, index) {
-      var img = document.createElement('img');
-      img.alt = '';
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.fetchPriority = 'low';
-      img.draggable = false;
-      if (index === 0) img.className = 'is-active';
-      img.addEventListener('load', function () { onFrameSettled(img); });
-      img.addEventListener('error', function () { onFrameSettled(img); });
-      img.src = src;
-      if (img.complete) onFrameSettled(img);
-      panel.appendChild(img);
-    });
-
     document.body.appendChild(panel);
 
-    var panelImages = panel.querySelectorAll('img');
+    var state = IDLE;
+    var framesReady = false;
+    var framesRequested = false;
+    var pendingOpen = false;
+    var panelImages = [];
     var slideIndex = 0;
     var slideshowElapsed = 0;
     var lastTick = null;
-
-    var overscroll = 0;
-    var targetY = 0;
-    var currentY = 0;
-    var rafId = null;
-    var releaseTimer = null;
+    var slideRaf = null;
     var hideTimer = null;
-    var touchY = null;
-    var armed = false;
-    var lastInputTime = 0;
+    var closeFallbackTimer = null;
+    var cooldownUntil = 0;
+    var lockedScrollY = 0;
+    var touchStartY = null;
+    var touchFromArmed = false;
+    var html = document.documentElement;
 
     function setActiveSlide(index) {
-      if (index === slideIndex) return;
+      if (!panelImages.length) return;
+      if (index === slideIndex && panelImages[slideIndex] &&
+          panelImages[slideIndex].classList.contains('is-active')) {
+        return;
+      }
       if (panelImages[slideIndex]) panelImages[slideIndex].classList.remove('is-active');
       slideIndex = index;
       if (panelImages[slideIndex]) panelImages[slideIndex].classList.add('is-active');
     }
 
-    // Wordmark sits at the visual end of the page: footer bottom is in view.
-    function atPageEnd() {
-      var rect = footer.getBoundingClientRect();
-      return rect.bottom <= window.innerHeight + 8 && rect.top < window.innerHeight;
-    }
-
-    function panelHeight() {
-      return panel.getBoundingClientRect().height || panel.offsetHeight || 0;
-    }
-
-    function isMobileViewport() {
-      return window.matchMedia('(max-width: ' + MOBILE_MAX_WIDTH + 'px)').matches;
-    }
-
-    function setOverscroll(value) {
-      overscroll = value < 0 ? 0 : value;
-      var travel = overscroll - THRESHOLD_PX;
-      var maxLift = panelHeight();
-      targetY = travel <= 0 || maxLift <= 0
-        ? 0
-        : -maxLift * (1 - Math.exp(-travel / RESISTANCE));
-    }
-
-    function clearReleaseTimer() {
-      if (!releaseTimer) return;
-      window.clearTimeout(releaseTimer);
-      releaseTimer = null;
+    function syncHtmlFlags() {
+      html.classList.toggle('is-footer-reveal-armed', state === ARMED);
+      html.classList.toggle('is-footer-reveal-open', state === OPEN);
+      html.classList.toggle('is-footer-reveal-closing', state === CLOSING);
+      document.dispatchEvent(new CustomEvent('site:footer-reveal-state'));
     }
 
     function clearHideTimer() {
@@ -140,129 +96,301 @@
       hideTimer = null;
     }
 
-    function closeReveal() {
-      armed = false;
-      setOverscroll(0);
-      requestFrame();
+    function startHideTimer() {
+      clearHideTimer();
+      hideTimer = window.setTimeout(function () {
+        hideTimer = null;
+        closeReveal();
+      }, AUTO_HIDE_MS);
     }
 
-    function scheduleRelease() {
-      clearReleaseTimer();
-      releaseTimer = window.setTimeout(function () {
-        releaseTimer = null;
-        // Keep panel open briefly after the gesture, then auto-hide.
-        clearHideTimer();
-        hideTimer = window.setTimeout(function () {
-          hideTimer = null;
-          closeReveal();
-        }, AUTO_HIDE_MS);
-      }, RELEASE_DELAY_MS);
+    function bumpHideTimer() {
+      if (state === OPEN) startHideTimer();
     }
 
-    function tickSlideshow(isOpen) {
-      var now = performance.now();
+    function lockScroll() {
+      lockedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + lockedScrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    }
 
-      if (!isOpen) {
+    function unlockScroll() {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, lockedScrollY);
+    }
+
+    function stopSlideshow() {
+      if (slideRaf) {
+        window.cancelAnimationFrame(slideRaf);
+        slideRaf = null;
+      }
+      lastTick = null;
+    }
+
+    function tickSlideshow(now) {
+      slideRaf = null;
+      if (state !== OPEN) {
         lastTick = null;
         return;
       }
-
       if (lastTick != null) slideshowElapsed += now - lastTick;
       lastTick = now;
-      setActiveSlide(Math.floor(slideshowElapsed / SLIDE_INTERVAL_MS) % panelImages.length);
+      if (panelImages.length) {
+        setActiveSlide(Math.floor(slideshowElapsed / SLIDE_INTERVAL_MS) % panelImages.length);
+      }
+      slideRaf = window.requestAnimationFrame(tickSlideshow);
     }
 
-    function frame() {
-      rafId = null;
+    function startSlideshow() {
+      if (slideRaf) return;
+      lastTick = null;
+      slideRaf = window.requestAnimationFrame(tickSlideshow);
+    }
 
-      currentY += (targetY - currentY) * (
-        targetY < currentY
-          ? EASING_OPEN
-          : (isMobileViewport() ? EASING_CLOSE_MOBILE : EASING_CLOSE)
-      );
+    function ensureFrames() {
+      if (framesRequested) return;
+      framesRequested = true;
 
-      var settled = Math.abs(targetY - currentY) < 0.35;
-      if (settled) currentY = targetY;
+      var pending = IMAGE_COUNT;
 
-      var isOpen = currentY < -0.5;
-
-      if (isOpen) {
-        liftRoot.style.transform = 'translate3d(0, ' + currentY.toFixed(2) + 'px, 0)';
-        liftRoot.classList.add('is-lifted');
-      } else {
-        liftRoot.style.transform = '';
-        liftRoot.classList.remove('is-lifted');
+      function onFrameSettled(img) {
+        if (img.dataset.settled === 'true') return;
+        img.dataset.settled = 'true';
+        pending -= 1;
+        if (pending <= 0) {
+          framesReady = true;
+          if (pendingOpen) {
+            pendingOpen = false;
+            openReveal();
+          }
+        }
       }
 
-      panel.classList.toggle('is-ready', isOpen);
-      tickSlideshow(isOpen);
-
-      // Keep ticking while open so frames advance without further scrolling.
-      if (!settled || isOpen) requestFrame();
+      buildImageList().forEach(function (src, index) {
+        var img = document.createElement('img');
+        img.alt = '';
+        img.decoding = 'async';
+        img.draggable = false;
+        if (index === 0) img.className = 'is-active';
+        img.addEventListener('load', function () { onFrameSettled(img); });
+        img.addEventListener('error', function () { onFrameSettled(img); });
+        img.src = src;
+        if (img.complete) onFrameSettled(img);
+        panel.appendChild(img);
+        panelImages.push(img);
+      });
     }
 
-    function requestFrame() {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(frame);
+    function atDocumentEnd() {
+      var maxScroll = Math.max(0, html.scrollHeight - window.innerHeight);
+      return (window.scrollY || window.pageYOffset || 0) >= maxScroll - 1;
     }
 
-    function pull(delta) {
-      if (!framesReady) return;
+    function canArm() {
+      if (Date.now() < cooldownUntil) return false;
+      if (!atDocumentEnd()) return false;
+      var rect = wordmark.getBoundingClientRect();
+      var vh = window.innerHeight || html.clientHeight;
+      if (rect.height <= 0) return false;
+      /* Page cannot scroll further and flowerdog is on screen — that is the end. */
+      return rect.top < vh && rect.bottom > 0;
+    }
 
-      var now = performance.now();
-      var gap = now - lastInputTime;
-      lastInputTime = now;
+    function evaluateArm() {
+      if (state === OPEN || state === CLOSING) return;
+      if (canArm()) {
+        if (state !== ARMED) {
+          state = ARMED;
+          ensureFrames();
+          syncHtmlFlags();
+        }
+      } else if (state === ARMED) {
+        state = IDLE;
+        syncHtmlFlags();
+      }
+    }
 
-      if (!atPageEnd()) {
-        armed = false;
+    function openReveal() {
+      if (state === OPEN || state === CLOSING) return;
+      if (!framesReady) {
+        pendingOpen = true;
+        ensureFrames();
         return;
       }
 
-      if (!armed) {
-        if (delta <= 0 || gap < GESTURE_GAP_MS) return;
-        armed = true;
-        overscroll = 0;
-        clearHideTimer();
-      }
+      pendingOpen = false;
+      state = OPEN;
+      syncHtmlFlags();
 
-      if (delta < 0 && overscroll <= 0) return;
+      lockScroll();
+      liftRoot.classList.add('is-open');
+      liftRoot.classList.remove('is-closing');
+      panel.classList.add('is-ready');
+      panel.setAttribute('aria-hidden', 'false');
 
-      clearHideTimer();
-      setOverscroll(overscroll + delta);
-      scheduleRelease();
-      requestFrame();
+      startHideTimer();
+      startSlideshow();
     }
 
+    function finishClose() {
+      if (state !== CLOSING) return;
+
+      clearCloseFallback();
+      panel.classList.remove('is-ready');
+      panel.setAttribute('aria-hidden', 'true');
+      liftRoot.classList.remove('is-closing');
+
+      unlockScroll();
+      cooldownUntil = Date.now() + REARM_COOLDOWN_MS;
+      state = IDLE;
+      syncHtmlFlags();
+      window.requestAnimationFrame(evaluateArm);
+    }
+
+    function clearCloseFallback() {
+      if (!closeFallbackTimer) return;
+      window.clearTimeout(closeFallbackTimer);
+      closeFallbackTimer = null;
+    }
+
+    function closeReveal() {
+      if (state !== OPEN) return;
+
+      clearHideTimer();
+      stopSlideshow();
+      clearCloseFallback();
+
+      state = CLOSING;
+      syncHtmlFlags();
+
+      liftRoot.classList.remove('is-open');
+      liftRoot.classList.add('is-closing');
+      /* Unlock after the curtain settles so the page does not jump mid-motion. */
+      closeFallbackTimer = window.setTimeout(function () {
+        closeFallbackTimer = null;
+        finishClose();
+      }, 700);
+    }
+
+    function onLiftTransitionEnd(event) {
+      if (event.target !== liftRoot) return;
+      if (event.propertyName !== 'transform') return;
+      if (state === CLOSING) {
+        clearCloseFallback();
+        finishClose();
+      }
+    }
+
+    function requestOpenFromGesture() {
+      if (state === OPEN) {
+        bumpHideTimer();
+        return;
+      }
+      if (state !== ARMED) return;
+      openReveal();
+    }
+
+    liftRoot.addEventListener('transitionend', onLiftTransitionEnd);
+
+    if (typeof IntersectionObserver === 'function') {
+      var brandObserver = new IntersectionObserver(function () {
+        evaluateArm();
+      }, {
+        root: null,
+        threshold: [0, 0.15, 0.35, 0.55, 0.75, 1],
+        rootMargin: '0px'
+      });
+      brandObserver.observe(wordmark);
+
+      var preloadObserver = new IntersectionObserver(function (entries) {
+        if (entries.some(function (entry) { return entry.isIntersecting; })) {
+          ensureFrames();
+          preloadObserver.disconnect();
+        }
+      }, { root: null, rootMargin: '400px 0px', threshold: 0 });
+      preloadObserver.observe(footer);
+    }
+
+    window.addEventListener('scroll', evaluateArm, { passive: true });
+    window.addEventListener('resize', evaluateArm);
+
     window.addEventListener('wheel', function (event) {
-      pull(event.deltaY);
+      if (state === OPEN) {
+        bumpHideTimer();
+        return;
+      }
+      if (state === CLOSING) return;
+
+      evaluateArm();
+
+      if (state !== ARMED) return;
+
+      if (event.deltaY > 0) {
+        requestOpenFromGesture();
+      } else if (event.deltaY < 0) {
+        state = IDLE;
+        syncHtmlFlags();
+      }
     }, { passive: true });
 
     window.addEventListener('touchstart', function (event) {
       var touch = event.touches && event.touches[0];
-      touchY = touch ? touch.clientY : null;
-      lastInputTime = 0;
+      if (!touch) return;
+
+      if (state === OPEN) {
+        bumpHideTimer();
+        touchStartY = touch.clientY;
+        touchFromArmed = false;
+        return;
+      }
+
+      evaluateArm();
+      touchStartY = touch.clientY;
+      touchFromArmed = state === ARMED;
     }, { passive: true });
 
     window.addEventListener('touchmove', function (event) {
       var touch = event.touches && event.touches[0];
-      if (!touch || touchY == null) return;
-      var delta = touchY - touch.clientY;
-      touchY = touch.clientY;
-      pull(delta);
+      if (!touch || touchStartY == null) return;
+
+      var delta = touchStartY - touch.clientY;
+
+      if (state === OPEN) {
+        bumpHideTimer();
+        return;
+      }
+      if (state === CLOSING) return;
+
+      if (touchFromArmed && state === ARMED && delta > INTENT_PX) {
+        touchFromArmed = false;
+        requestOpenFromGesture();
+      }
     }, { passive: true });
 
     function endTouch() {
-      touchY = null;
-      if (overscroll > 0) scheduleRelease();
+      touchStartY = null;
+      touchFromArmed = false;
+      if (state === OPEN) bumpHideTimer();
+      else evaluateArm();
     }
 
     window.addEventListener('touchend', endTouch, { passive: true });
     window.addEventListener('touchcancel', endTouch, { passive: true });
 
-    window.addEventListener('resize', function () {
-      setOverscroll(overscroll);
-      requestFrame();
+    /* Safety: if transitionend is missed, still unlock. */
+    liftRoot.addEventListener('transitioncancel', function (event) {
+      if (event.target !== liftRoot) return;
+      if (state === CLOSING) finishClose();
     });
+
+    evaluateArm();
   }
 
   function init() {

@@ -377,30 +377,6 @@ main {
   scroll-margin-top: 3em;
 }
 
-.ids.page-how-we-work .how-we-work__audit-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 2em;
-}
-
-.ids.page-how-we-work .how-we-work__audit-row .main-page-text-fixed {
-  flex: 0 0 50%;
-  width: 50%;
-}
-
-.ids.page-how-we-work .how-we-work__dog {
-  margin: 0;
-  flex: 0 0 auto;
-  width: 15em;
-  max-width: 34%;
-}
-
-.ids.page-how-we-work .how-we-work__dog img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .ids.page-how-we-work a.how-we-work__jump {
   color: inherit;
   font-weight: inherit;
@@ -419,20 +395,5 @@ main {
 @media screen and (max-width: 768px) {
   .ids.page-how-we-work h1.how-we-work__title {
     font-size: 2em;
-  }
-
-  .ids.page-how-we-work .how-we-work__audit-row {
-    flex-direction: column;
-  }
-
-  .ids.page-how-we-work .how-we-work__audit-row .main-page-text-fixed {
-    flex-basis: auto;
-    width: 100%;
-  }
-
-  .ids.page-how-we-work .how-we-work__dog {
-    width: 12em;
-    max-width: 70%;
-    align-self: center;
   }
 }
