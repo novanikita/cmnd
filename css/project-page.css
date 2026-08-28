@@ -8,6 +8,12 @@
   box-sizing: border-box;
 }
 
+.ids .main-page-text-fixed a:hover,
+.ids .main-page-text-fixed a:focus-visible {
+  color: var(--color-orange);
+  text-decoration-color: var(--color-orange);
+}
+
 .main-page-header__cta,
 .main-page-header__cta:hover,
 .main-page-header__cta:visited,
@@ -395,5 +401,43 @@ main {
 @media screen and (max-width: 768px) {
   .ids.page-how-we-work h1.how-we-work__title {
     font-size: 2em;
+  }
+}
+
+/* Vacancies */
+.ids.page-vacancies h1.vacancies__title {
+  margin: 0;
+  font-size: 3em;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-blue);
+}
+
+.ids.page-vacancies h2.vacancies__title {
+  margin: 0 0 0.4em;
+  font-size: 2em;
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--color-blue);
+}
+
+.ids.page-vacancies .vacancies__section {
+  scroll-margin-top: 3em;
+}
+
+.ids.page-vacancies .vacancies__list {
+  font-size: 1.5em;
+  line-height: 1.2;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .ids.page-vacancies h1.vacancies__title {
+    font-size: 2em;
+  }
+
+  .ids.page-vacancies .vacancies__list {
+    font-size: 1.2em;
   }
 }
