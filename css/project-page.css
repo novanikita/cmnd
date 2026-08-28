@@ -9,7 +9,9 @@
 }
 
 .ids .main-page-text-fixed a:hover,
-.ids .main-page-text-fixed a:focus-visible {
+.ids .main-page-text-fixed a:focus-visible,
+.ids.page-vacancies .ids__wrapper.S a:hover,
+.ids.page-vacancies .ids__wrapper.S a:focus-visible {
   color: var(--color-orange);
   text-decoration-color: var(--color-orange);
 }
@@ -407,7 +409,7 @@ main {
 /* Vacancies */
 .ids.page-vacancies h1.vacancies__title {
   margin: 0;
-  font-size: 3em;
+  font-size: 5em;
   font-weight: 500;
   line-height: 1;
   color: var(--color-blue);
@@ -434,7 +436,7 @@ main {
 
 @media screen and (max-width: 768px) {
   .ids.page-vacancies h1.vacancies__title {
-    font-size: 2em;
+    font-size: 3em;
   }
 
   .ids.page-vacancies .vacancies__list {
