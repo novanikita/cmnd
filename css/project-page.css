@@ -407,39 +407,6 @@ main {
 }
 
 /* Vacancies */
-.ids.page-vacancies h1.vacancies__title {
-  margin: 0;
-  font-size: 5em;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--color-blue);
-}
-
-.ids.page-vacancies h2.vacancies__title {
-  margin: 0 0 0.4em;
-  font-size: 2em;
-  font-weight: 700;
-  line-height: 0.9;
-  color: var(--color-blue);
-}
-
 .ids.page-vacancies .vacancies__section {
   scroll-margin-top: 3em;
-}
-
-.ids.page-vacancies .vacancies__list {
-  font-size: 1.5em;
-  line-height: 1.2;
-  font-weight: 500;
-  margin-bottom: 0;
-}
-
-@media screen and (max-width: 768px) {
-  .ids.page-vacancies h1.vacancies__title {
-    font-size: 3em;
-  }
-
-  .ids.page-vacancies .vacancies__list {
-    font-size: 1.2em;
-  }
 }

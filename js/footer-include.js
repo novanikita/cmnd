@@ -1,8 +1,18 @@
 (function () {
   'use strict';
 
+  /* Set to true when the footer and reveal animation should be live again. */
+  var FOOTER_ENABLED = false;
+
   var slots = document.querySelectorAll('[data-site-footer]');
   if (!slots.length) return;
+
+  if (!FOOTER_ENABLED) {
+    slots.forEach(function (slot) {
+      slot.remove();
+    });
+    return;
+  }
 
   /* Inline fallback when fetch fails (file://, offline, wrong base path on mobile). */
   var FALLBACK =
