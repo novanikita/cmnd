@@ -1,8 +1,10 @@
 (function () {
   'use strict';
 
-  /* Set to true when the footer and reveal animation should be live again. */
-  var FOOTER_ENABLED = false;
+  /* Master switch for the site footer. */
+  var FOOTER_ENABLED = true;
+  /* Set to true locally while polishing the footer reveal animation. */
+  var FOOTER_REVEAL_ENABLED = false;
 
   var slots = document.querySelectorAll('[data-site-footer]');
   if (!slots.length) return;
@@ -56,7 +58,9 @@
       slot.innerHTML = markup;
     });
     document.dispatchEvent(new CustomEvent('site:footer-ready'));
-    loadFooterReveal();
+    if (FOOTER_REVEAL_ENABLED) {
+      loadFooterReveal();
+    }
   }
 
   fetch('partials/footer.html')
